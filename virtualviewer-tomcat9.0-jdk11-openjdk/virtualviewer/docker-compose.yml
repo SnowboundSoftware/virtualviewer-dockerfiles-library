@@ -1,0 +1,42 @@
+# See README.md for usage information
+version: '3'
+
+services:
+# Snowbound VirtualViewer Image
+  vv-java-tomcat:
+    image: quay.io/snowbound/virtualviewer:5.1.0.197-tomcat9.0-jdk11-openjdk
+#    image: quay.io/snowbound/virtualviewer:5.1-tomcat9.0-jdk11-openjdk-latest
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ehcache_vol:/tmp/vvcache
+      - vvtmp_vol:/tmp/vvtmp
+      - ./classes:/snowbound/classes:ro
+#      - ./fonts:/snowbound/fonts:ro
+#      - ./tomcat:/snowbound/tomcat:ro
+#      - ./user-config:/snowbound/user-config:ro
+#      - ./WEB-INF:/snowbound/WEB-INF:ro
+#
+# If you follow the latest tag, watchtower will keep your environment up to date
+# Useful for test enviornments. Not recomended for production.
+# https://hub.docker.com/r/v2tec/watchtower/
+#
+#  watchtower:
+#    image: v2tec/watchtower
+#    restart: always
+#    environment:
+#      - REPO_USER=
+#      - REPO_PASS=
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    command: --interval 30
+volumes:
+  ehcache_vol:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  vvtmp_vol:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs

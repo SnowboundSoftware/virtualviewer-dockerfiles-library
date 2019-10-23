@@ -1,0 +1,1 @@
+Place your SnowboundLicense.jar and custom content handler JARs here.

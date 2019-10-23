@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+         version="3.0">
+    <servlet>
+        <servlet-name>AjaxServlet</servlet-name>
+        <servlet-class>com.snowbound.ajax.servlet.AjaxServlet</servlet-class>        
+        
+        <init-param>
+            <param-name>contentHandlerClass</param-name>
+            <param-value>com.snowbound.contenthandler.example.FileContentHandler</param-value>
+        </init-param>
+        <init-param>
+            <param-name>filePath</param-name>
+            <param-value>./sample-documents</param-value>
+        </init-param>
+        <init-param>
+            <param-name>tmpDir</param-name>
+            <param-value>/tmp/vvtmp</param-value>
+        </init-param>
+        <!-- This parameter is deprecated. While the default JDK logger uses this parameter,
+             other logging frameworks should be configued according to their documentation. 
+             Any logging framework supported by SLF4J may be used with VirtualViewer. -->
+        <init-param>
+            <param-name>logLevel</param-name>
+            <param-value>ALL</param-value>
+        </init-param> 
+        <!--Absolute or relative path to Tesseract OCR Engine's training data. If using packed WARs in Tomcat, this 
+            needs to be changed to an external unpacked folder.        -->
+        <init-param>
+            <param-name>tesseractDataPath</param-name>
+            <param-value>/tessdata</param-value>
+        </init-param>
+        
+        <!-- Document / Display Settings -->
+        
+        <init-param>
+            <param-name>pixelLimit</param-name>
+            <param-value>4000x4000</param-value>
+        </init-param>
+        
+        <init-param>
+            <param-name>thumbByteEstimate</param-name>
+            <param-value>6000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>thumbnailDPI</param-name>
+            <param-value>60</param-value>
+        </init-param>
+        <init-param>
+            <param-name>enableDocumentCache</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>clearCacheOnSave</param-name>
+            <param-value>true</param-value>
+        </init-param>
+               <init-param>
+            <param-name>saveAnnotationsAsXml</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>annotationOutputFormat</param-name>
+            <param-value>snowbound</param-value>
+        </init-param>
+        <init-param>
+            <param-name>svgExclusions</param-name>
+            <param-value>PCL_1,PCL_5,EMAIL</param-value> <!-- a comma-separated list of format names. i.e. MODCA_IOCA,PDF -->
+        </init-param>
+        <init-param>
+            <param-name>loadVirtualDocumentAnnotations</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>saveVirtualDocumentAnnotations</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <!-- enable cache obfuscation -->
+            <param-name>enableCacheObfuscation</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>disableUploadDocument</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        
+        <!-- File Format Settings -->
+        
+        <!-- This controls whether PNG or JPEGs are sent from the server to the client.  Only acceptable
+             values are PNG and JPG. -->
+        <init-param>
+            <param-name>clientImageType</param-name>
+            <param-value>PNG</param-value>
+        </init-param>
+        <init-param>
+            <param-name>tiffCompressionType</param-name>
+            <param-value>TIFF_LZW</param-value>
+        </init-param>
+        <init-param>
+            <param-name>maxByteMultiplier</param-name>
+            <param-value>20</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jpegQuality</param-name>
+            <param-value>65</param-value>
+        </init-param>
+        <init-param>
+            <param-name>pdfBitDepth</param-name>
+            <param-value>24</param-value>
+        </init-param>
+        <init-param>
+            <param-name>pdfDPI</param-name>
+            <param-value>150</param-value>
+        </init-param>
+        <init-param>
+            <param-name>pdfFormat</param-name>
+            <param-value>TIFF_LZW</param-value>
+        </init-param>
+        <init-param>
+            <param-name>rtfBitDepth</param-name>
+            <param-value>24</param-value>
+        </init-param>
+        <init-param>
+            <param-name>rtfDPI</param-name>
+            <param-value>150</param-value>
+        </init-param>
+        <init-param>
+            <param-name>rtfFormat</param-name>
+            <param-value>TIFF_LZW</param-value>
+        </init-param>
+        <init-param>
+            <param-name>docxBitDepth</param-name>
+            <param-value>24</param-value>
+        </init-param>
+        <init-param>
+            <param-name>docxDPI</param-name>
+            <param-value>150</param-value>
+        </init-param>
+        <init-param>
+            <param-name>docxFormat</param-name>
+            <param-value>TIFF_LZW</param-value>
+        </init-param>
+        <init-param>
+            <param-name>wordBitDepth</param-name>
+            <param-value>24</param-value>
+        </init-param>
+        <init-param>
+            <param-name>wordDPI</param-name>
+            <param-value>150</param-value>
+        </init-param>
+        <init-param>
+            <param-name>wordFormat</param-name>
+            <param-value>TIFF_LZW</param-value>
+        </init-param>
+        <init-param>
+            <param-name>xlsBitDepth</param-name>
+            <param-value>24</param-value>
+        </init-param>
+        <init-param>
+            <param-name>xlsDPI</param-name>
+            <param-value>150</param-value>
+        </init-param>
+        <init-param>
+            <param-name>xlsFormat</param-name>
+            <param-value>TIFF_LZW</param-value>
+        </init-param>
+        <init-param>
+            <param-name>xlsWidth</param-name>
+            <param-value>14</param-value>
+        </init-param>
+        <init-param>
+            <param-name>xlsHeight</param-name>
+            <param-value>11</param-value>
+        </init-param>
+        <init-param>
+            <param-name>xlsxWidth</param-name>
+            <param-value>14</param-value>
+        </init-param>
+        <init-param>
+            <param-name>xlsxHeight</param-name>
+            <param-value>11</param-value>
+        </init-param>
+        <init-param>
+            <param-name>xlsxMaximumPageLimit</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        
+        <init-param>
+            <param-name>pptBitDepth</param-name>
+            <param-value>24</param-value>
+        </init-param>
+        <init-param>
+            <param-name>pptDPI</param-name>
+            <param-value>150</param-value>
+        </init-param>
+        <init-param>
+            <param-name>pptFormat</param-name>
+            <param-value>TIFF_LZW</param-value>
+        </init-param>
+        
+        <!-- Custom image rubber stamps have been deprecated - admins should use the config.js parameter
+             initialStamps or its related stamp API.-->
+        
+        <!-- Ascii values -->
+        
+        <init-param>
+            <param-name>DEFAULT_XDpi</param-name>
+            <param-value>200</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_YDpi</param-name>
+            <param-value>200</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_leftMargin</param-name>
+            <param-value>1000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_rightMargin</param-name>
+            <param-value>1000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_topMargin</param-name>
+            <param-value>750</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_bottomMargin</param-name>
+            <param-value>750</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_tabStop</param-name>
+            <param-value>8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_pageWidth</param-name>
+            <param-value>8500</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_pageHeight</param-name>
+            <param-value>11000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_pointSize</param-name>
+            <param-value>-1</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_charsPerLine</param-name>
+            <param-value>80</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_linesPerPage</param-name>
+            <param-value>60</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_weight</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_italic</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_typeFace</param-name>
+            <param-value>TimesRoman</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_asciiFont</param-name>
+            <param-value>null</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_lineSpacing</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_charSpacing</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DEFAULT_pageOffset</param-name>
+            <param-value>1</param-value>
+        </init-param>
+        
+         <!-- Set-Up for Exchange Info -->
+        <init-param>
+            <param-name>showExchange</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        
+        <!-- Set-Up for Email -->
+        
+        <!-- 
+        <init-param>
+            <param-name>smtpServer</param-name>
+            <param-value></param-value>
+        </init-param>
+        <init-param>
+            <param-name>smtpUsername</param-name>
+            <param-value></param-value>
+        </init-param>
+        <init-param>
+            <param-name>smtpPassword</param-name>
+            <param-value></param-value>
+        </init-param>  
+        -->
+        <!--
+        <init-param>
+            <param-name>Access-Control-Allow-Origin</param-name>
+            <param-value>http://firstallowedhost.com:8080, http://secondallowedhost.com:8080</param-value>
+        </init-param>  
+        
+        <init-param>
+            <param-name>Access-Control-Allow-Headers</param-name>
+            <param-value>content-type, accept</param-value>
+        </init-param>
+        
+        <init-param>
+            <param-name>Access-Control-Allow-Credentials</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        -->
+    </servlet>
+    <!--end of integrated server parameters-->
+    
+    <servlet-mapping>
+        <servlet-name>AjaxServlet</servlet-name>
+        <url-pattern>/AjaxServlet</url-pattern>
+    </servlet-mapping>
+    
+    <env-entry> 
+        <env-entry-name>snowboundLicensePath</env-entry-name> 
+        <env-entry-type>java.lang.String</env-entry-type> 
+        <env-entry-value>./WEB-INF/lib/SnowboundLicense.jar</env-entry-value> 
+    </env-entry>
+</web-app>
