@@ -181,6 +181,13 @@ define(["vvDefines"], function(vvDefines) {
         /* 
          * -- ANNOTATIONS --
          */   
+        
+        /**
+         * @member {boolean} readOnlyAnnotationMode Enable or disbale read-only annotation mode. In read-only mode, users
+         * cannot edit, move or create annotations. 
+         * @memberof vvConfig
+         */
+        readOnlyAnnotationMode: false,
     
         /**
          * @member {boolean} showAnnNavToggle A small panel in the page thumbnails tab allows the user to navigate between annotations on the
@@ -1050,6 +1057,55 @@ define(["vvDefines"], function(vvDefines) {
          */
         disableUserPreferences: false,
 
+        /**
+         * @member {boolean} disableToolbarHamburger This disables the Hamburger sizing of the toolbars if true.
+         * If false, it will shrink the toolbar down to hamburger at about 400px.
+         * @memberof vvConfig
+         */
+        disableToolbarHamburger: false,
+        
+        /**
+         * @member {object} disableErrorModals This is an object that stores many booleans, each one related to a set of error modals.
+         * If true, then modals will not pop up for the selected modals. 
+         * NOTE: server and client are hammer options and should probably not be used unless you want to disable EVERYTHING from that origin.
+         * @property {boolean} server Disable all modals originating from the server
+         * @property {boolean} client Disable all modals originating from the client
+         * @property {boolean} adminDisabled Disable all modals that tell the users that the administrator blocked this action
+         * @property {boolean} annotations Disable all modals originating from annotations
+         * @property {boolean} bookmark Disable all modals originating from Bookmars
+         * @property {boolean} cropBlock Disable all modals originating from cropping
+         * @property {boolean} documentNotFound Disable modals telling the user that a document was not found
+         * @property {boolean} export Disable modals telling the user that an export operation failed
+         * @property {boolean} IEImageLoadError Disable all modals originating from IE
+         * @property {boolean} imageFailedToLoad Disable all modals originating from the image failing to load
+         * @property {boolean} media Disable all modals originating from media errors, for example video and audio playback
+         * @property {boolean} pageLimit Disable all modals originating from hitting a page limit
+         * @property {boolean} pageManipulation Disable all modals originating from cut/copy/paste
+         * @property {boolean} print Disable all modals originating from printing
+         * @property {boolean} splitScreen Disable all modals originating from split screen
+         * @property {boolean} tabs Disable all modals originating from document tabs
+         * @property {boolean} xlsxPageLimited Disable all modals originating from XLSX limiting
+         */
+        disableErrorModals:{
+            server:false,
+            client:false,
+            adminDisabled:false,
+            annotations:false,
+            bookmark:false,
+            cropBlock:false,
+            documentNotFound:false,
+            export:false,
+            IEImageLoadError:false,
+            imageFailedToLoad:false,
+            media:false,
+            pageLimit:false,
+            pageManipulation:false,
+            print:false,
+            splitScreen:false,
+            tabs:false,
+            xlsxPageLimited:false
+        },
+        
         /**
          * @member {boolean} disableRedactionWarningDialog Disable the redaction warning dialog that users see when first 
          * attempting to draw a redaction. Please read the following before 
