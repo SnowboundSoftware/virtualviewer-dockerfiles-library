@@ -134,7 +134,7 @@ Below are a few examples of how to run Snowbound VirtualViewer on Docker. Before
 
 ## Sample Handler
 
-1. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.1-tomcat9.0-jdk11-openjdk-latest`.
+1. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.2-tomcat9.0-jdk11-openjdk-latest`.
 2. Open a browser to http://localhost:8080/virtualviewer.
 
 
@@ -143,7 +143,7 @@ Below are a few examples of how to run Snowbound VirtualViewer on Docker. Before
 
 4. Copy your custom content handler`.jar`  and required dependencies into the newly created `classes` directory.
 5. In the `WEB-XML` directory, edit the parameter `contentHandlerClass` and replace `com.snowbound.contenthandler.example.FileContentHandler` with the classpath of your custom content handler.
-6. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.1-tomcat9.0-jdk11-openjdk-latest`
+6. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.2-tomcat9.0-jdk11-openjdk-latest`
 4. Open a browser to http://localhost:8080/virtualviewer.
 
 
@@ -177,7 +177,7 @@ You will need to add the `-v <PATH TO TOMCAT>:/snowbound/tomcat` argument to you
 
 ## Example
 
-`docker run -it -p 8080:8080 -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/classes:/snowbound/classes -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/tomcat:/snowbound/tomcat quay.io/snowbound/virtualviewer:5.1-tomcat9.0-jdk11-openjdk-latest`
+`docker run -it -p 8080:8080 -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/classes:/snowbound/classes -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/tomcat:/snowbound/tomcat quay.io/snowbound/virtualviewer:5.2-tomcat9.0-jdk11-openjdk-latest`
 
 
 
@@ -211,7 +211,7 @@ Specify how much of the available CPU resources a container can use. For instanc
 ### Example
 
 `docker run -it -p 8080:8080 -v /home/dpowers/classes:/snowbound/classes --mount type=tmpfs,destination=/tmp
-/vvcache -m 512m --cpus=1 quay.io/snowbound/virtualviewer:5.1-tomcat9.0-jdk11-openjdk-latest`
+/vvcache -m 512m --cpus=1 quay.io/snowbound/virtualviewer:5.2-tomcat9.0-jdk11-openjdk-latest`
 
 
 
