@@ -4,8 +4,8 @@ version: '3'
 services:
 # Snowbound VirtualViewer Image
   vv-java-tomcat:
-    image: quay.io/snowbound/virtualviewer:5.2.0.284-tomcat9.0-jdk11-openjdk
-#    image: quay.io/snowbound/virtualviewer:5.2-tomcat9.0-jdk11-openjdk-latest
+#    image: quay.io/snowbound/virtualviewer:5.3.0.408-tomcat9.0-jdk11-openjdk
+    image: quay.io/snowbound/virtualviewer:5.3-tomcat9.0-jdk11-openjdk-latest
     restart: always
     ports:
       - 8080:8080

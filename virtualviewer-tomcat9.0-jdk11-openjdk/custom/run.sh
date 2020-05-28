@@ -20,6 +20,10 @@ cp -v -n /snowbound/classes/* -t $VVROOT/WEB-INF/lib/
 echo Copying WEB-INF files
 cp -v /snowbound/WEB-INF/* -t $VVROOT/WEB-INF/
 
+# Copy in js files
+echo Copying js files
+cp -r -v /snowbound/js/* -t $VVROOT/js/
+
 # Copy in user-config files
 echo Copying user-config files
 cp -v /snowbound/user-config/* -t $VVROOT/user-config/

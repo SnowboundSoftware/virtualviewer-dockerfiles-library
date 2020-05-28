@@ -13,24 +13,22 @@ Preferably in production, you will run this image on a Linux based Docker host s
 - [Running VirtualViewer on Docker](#running-virtualviewer-on-docker)
 - [Table of Contents](#table-of-contents)
 - [Minimum Requirements](#minimum-requirements)
-- [Building VirtualViewer Images](#building-virtualviewer-images)
 - [Evaluating VirtualViewer Docker on Linux](#evaluating-virtualviewer-docker-on-linux)
 - [Evaluating VirtualViewer Docker on macOS](#evaluating-virtualviewer-docker-on-macos)
 - [Evaluating VirtualViewer Docker on Windows](#evaluating-virtualviewer-docker-on-windows)
     + [Note about Docker on Windows in VMware](#note-about-docker-on-windows-in-vmware)
     + [Configuring](#configuring)
-- [`docker run` Examples](#-docker-run--examples)
+- [`docker run` Examples](#docker-run-examples)
   * [Sample Handler](#sample-handler)
   * [Custom Content Handler](#custom-content-handler)
-- [Java Options](#java-options)
 - [Thread Timeout](#thread-timeout)
   * [Edit server.xml](#edit-serverxml)
   * [Example](#example)
   * [Reference](#reference)
 - [Docker Resource Allocation](#docker-resource-allocation)
   * [Docker Arguments](#docker-arguments)
-    + [`-m` or `--memory=`  - Memory Allocation](#--m--or----memory------memory-allocation)
-    + [`--cpus=` - Logical CPU core count](#---cpus-----logical-cpu-core-count)
+    + [`-m` or `--memory=`  - Memory Allocation](#-m-or---memory----Memory-Allocation)
+    + [`--cpus=` - Logical CPU core count](#--cpus---Logical-CPU-core-count)
     + [Example](#example-1)
   * [Reference](#reference-1)
 - [Port Mapping](#port-mapping)
@@ -39,23 +37,25 @@ Preferably in production, you will run this image on a Linux based Docker host s
   * [Different IP and Different Port](#different-ip-and-different-port)
 - [Volumes](#volumes)
   * [Required Volume Definitions](#required-volume-definitions)
-    + [`/snowbound/classes`](#--snowbound-classes-)
+    + [`/snowbound/classes`](#snowboundclasses)
   * [Optional Volume Definitions](#optional-volume-definitions)
-    + [`/snowbound/fonts`](#--snowbound-fonts-)
-    + [`/snowbound/tomcat`](#--snowbound-tomcat-)
-    + [`/snowbound/user-config`](#--snowbound-user-config-)
-    + [`/tmp/vvcache`](#--tmp-vvcache-)
-    + [`/snowbound/WEB-INF`](#--snowbound-web-inf-)
+    + [`/snowbound/fonts`](#snowboundfonts)
+    + [`/snowbound/js`](#snowboundjs)
+    + [`/snowbound/tomcat`](#snowboundtomcat)
+    + [`/snowbound/user-config`](#snowbounduser-config)
+    + [`/tmp/vvcache`](#tmpvvcache)
+    + [`/snowbound/WEB-INF`](#snowboundweb-inf)
 - [Inspecting an Image](#inspecting-an-image)
-  * [Tag Names](#tag-names)
-    + [`com.snowbound.docker.virtualviewer.base_image`](#-comsnowbounddockervirtualviewerbase-image-)
-    + [`com.snowbound.docker.virtualviewer.build_host`](#-comsnowbounddockervirtualviewerbuild-host-)
-    + [`com.snowbound.docker.virtualviewer.jenkins_buildnumber`](#-comsnowbounddockervirtualviewerjenkins-buildnumber-)
-    + [`com.snowbound.docker.virtualviewer.product`](#-comsnowbounddockervirtualviewerproduct-)
-    + [`com.snowbound.docker.virtualviewer.product_version`](#-comsnowbounddockervirtualviewerproduct-version-)
-    + [`com.snowbound.docker.virtualviewer.rm_java_artifact_version`](#-comsnowbounddockervirtualviewerrm-java-artifact-version-)
-    + [`com.snowbound.docker.virtualviewer.vendor`](#-comsnowbounddockervirtualviewervendor-)
-    + [`com.snowbound.docker.virtualviewer.vv_java_commit_id`](#-comsnowbounddockervirtualviewervv-java-commit-id-)
+  * [Label Names](#label-names)
+    + [`com.snowbound.docker.virtualviewer.base_image`](#comsnowbounddockervirtualviewerbase_image)
+    + [`com.snowbound.docker.virtualviewer.build_host`](#comsnowbounddockervirtualviewerbuild_host)
+    + [`com.snowbound.docker.virtualviewer.jenkins_buildnumber`](#comsnowbounddockervirtualviewerjenkins_buildnumber)
+    + [`com.snowbound.docker.virtualviewer.product`](#comsnowbounddockervirtualviewerproduct)
+    + [`com.snowbound.docker.virtualviewer.product_version`](#comsnowbounddockervirtualviewerproduct_version)
+    + [`com.snowbound.docker.virtualviewer.rm_java_artifact_version`](#comsnowbounddockervirtualviewerrm_java_artifact_version)
+    + [`com.snowbound.docker.virtualviewer.vendor`](#comsnowbounddockervirtualviewervendor)
+    + [`com.snowbound.docker.virtualviewer.vv_java_commit_id`](#comsnowbounddockervirtualviewervv_java_commit_id)
++ [Building Custom VirtualViewer Images](#building-custom-virtualviewer-images)
 
 # Minimum Requirements
 
@@ -71,17 +71,9 @@ Preferably in production, you will run this image on a Linux based Docker host s
 
 
 
-# Building VirtualViewer Images
-
-We currently build our image `FROM tomcat:9.0-jdk11-openjdk`. You can find the official tomcat images at https://hub.docker.com/_/tomcat. If you need to build VirtualViewer from a different image, please visit our public GitHub repository. There you can find the `Dockerfile` we use to build ours.
-
-https://github.com/SnowboundSoftware/PublicRepoTBD
-
-
-
 # Evaluating VirtualViewer Docker on Linux
 
-This configuration will give you the best results. Go go [here](# `docker run` Examples) to get started.
+This configuration will give you the best results. Go go [here](#docker-run-examples) to get started.
 
 
 
@@ -93,7 +85,7 @@ The default resource allocations that Docker for macOS comes configured with is 
 2. Open the `File Sharing` tab and make sure that you can access the path that you have downloaded the `SnowboundLicense.jar` to. By default it will be somewhere in `/Users` which is already enabled.
 3. Select the `Advanced` tab and adjust `Memory` to `4096MB` and `CPUs` to at least `2`.
 4. Click `Apply` and wait for Docker to restart.
-5. Go go [here](# `docker run` Examples) to get started.
+5. Go go [here](#docker-run-examples) to get started.
 
 
 
@@ -118,7 +110,7 @@ The default resource allocations that Docker for Windows comes configured with i
 3. In Docker for macOS open the `File Sharing` tab and make sure that you can access the path that you have downloaded the `SnowboundLicense.jar` to. By default it will be somewhere in `/Users` which is already enabled.
 4. Select the `Advanced` tab and adjust `Memory` to `4096MB` and `CPUs` to at least `2`.
 5. Click `Apply` and wait for the Docker Hyper-V virtual machine to restart.
-6. Go go [here](# `docker run` Examples) to get started.
+6. Go go [here](#docker-run-examples) to get started.
 
 
 
@@ -126,31 +118,26 @@ The default resource allocations that Docker for Windows comes configured with i
 
 Below are a few examples of how to run Snowbound VirtualViewer on Docker. Before running any example, be sure to do the following first
 
-1. Log into `quay.io` if you have not already done so using `docker login quay.io`.
-2. If it does not already exist, create a directory to store your `JAR` files called `classes`.
+1. Clone this repo to the machine you will run docker (or download the ZIP and extract it)
+2. Log into `quay.io` if you have not already done so using `docker login quay.io`.
 3. Copy your `SnowboundLicense.jar` into the newly created `classes` directory.
 
 
 
 ## Sample Handler
 
-1. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.2-tomcat9.0-jdk11-openjdk-latest`.
+1. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.3-tomcat9.0-jdk11-openjdk-latest`.
 2. Open a browser to http://localhost:8080/virtualviewer.
 
 
 
 ## Custom Content Handler
 
-4. Copy your custom content handler`.jar`  and required dependencies into the newly created `classes` directory.
-5. In the `WEB-XML` directory, edit the parameter `contentHandlerClass` and replace `com.snowbound.contenthandler.example.FileContentHandler` with the classpath of your custom content handler.
-6. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.2-tomcat9.0-jdk11-openjdk-latest`
-4. Open a browser to http://localhost:8080/virtualviewer.
+1. Copy your custom content handler`.jar`  and required dependencies into the newly created `classes` directory.
+2. In the `WEB-XML` directory, edit the parameter `contentHandlerClass` and replace `com.snowbound.contenthandler.example.FileContentHandler` with the classpath of your custom content handler.
+3. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.3-tomcat9.0-jdk11-openjdk-latest`Open a browser to http://localhost:8080/virtualviewer.
 
 
-
-# Java Options
-
-`-e `
 
 # Thread Timeout
 
@@ -177,7 +164,7 @@ You will need to add the `-v <PATH TO TOMCAT>:/snowbound/tomcat` argument to you
 
 ## Example
 
-`docker run -it -p 8080:8080 -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/classes:/snowbound/classes -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/tomcat:/snowbound/tomcat quay.io/snowbound/virtualviewer:5.2-tomcat9.0-jdk11-openjdk-latest`
+`docker run -it -p 8080:8080 -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/classes:/snowbound/classes -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/tomcat:/snowbound/tomcat quay.io/snowbound/virtualviewer:5.3-tomcat9.0-jdk11-openjdk-latest`
 
 
 
@@ -190,7 +177,7 @@ https://tomcat.apache.org/tomcat-7.0-doc/config/valve.html#Stuck_Thread_Detectio
 # Docker Resource Allocation
 
 Until Java 9, the JVM did not recognize CPU or memory limits set by the container flags. In Java 10, 
-memory limits are automatically recognized and enforced. This is why VirtualViewer is packaged with OpenJDK 11. At the current time, VirtualViewer and RasterMaster, the SDK that powers VirtualViewer, targets JRE 1.7. Therefore, your content handler only needs to target 1.7 or newer.
+memory limits are automatically recognized and enforced. This is why VirtualViewer is built and packaged with OpenJDK 11.
 
 
 
@@ -211,7 +198,7 @@ Specify how much of the available CPU resources a container can use. For instanc
 ### Example
 
 `docker run -it -p 8080:8080 -v /home/dpowers/classes:/snowbound/classes --mount type=tmpfs,destination=/tmp
-/vvcache -m 512m --cpus=1 quay.io/snowbound/virtualviewer:5.2-tomcat9.0-jdk11-openjdk-latest`
+/vvcache -m 512m --cpus=1 quay.io/snowbound/virtualviewer:5.3-tomcat9.0-jdk11-openjdk-latest`
 
 
 
@@ -278,6 +265,15 @@ Additional fonts not provided by the tomcat image
 
 
 
+### `/snowbound/js`
+
+Snowbound JS files
+
+* Place custom JS files here.
+* If possible, modifications should be made inside `user-config` first.
+
+
+
 ### `/snowbound/tomcat`
 
 Tomcat global configuration files
@@ -326,7 +322,7 @@ Docker images are labeled with various pieces of meta data at build time. To sho
 
 
 
-## Tag Names
+## Label Names
 
 ### `com.snowbound.docker.virtualviewer.base_image`
 
@@ -374,3 +370,17 @@ Docker images are labeled with various pieces of meta data at build time. To sho
 ### `com.snowbound.docker.virtualviewer.vv_java_commit_id`
 * The GitHub VirtualViewer Java GitHub commit ID used when building the VirtualViewer Java `WAR` file.
 * Example: `ed84f77ae71f9671d60600e6c7403caf33f35ac4`
+
+
+
+
+
+# Building Custom VirtualViewer Images
+
+**This information is only for end users looking to build custom images. If you require further assistance, please contact Snowbound support for more information.**
+
+We currently build our image `FROM tomcat:9.0-jdk11-openjdk`. You can find the official tomcat images at https://hub.docker.com/_/tomcat. If you need to build VirtualViewer from a different image, please visit our public GitHub repository. There you can find the `Dockerfile` we use to build ours. 
+
+You will need a `virtualviewer.war` package to build this image.
+
+https://github.com/SnowboundSoftware/virtualviewer-dockerfiles-library
