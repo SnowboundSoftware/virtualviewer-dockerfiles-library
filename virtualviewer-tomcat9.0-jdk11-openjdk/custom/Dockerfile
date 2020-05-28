@@ -42,7 +42,7 @@ COPY ROOT $WEBAPPS/ROOT
 EXPOSE 8080
 
 # Set volumes
-VOLUME ["/tmp/vvcache", "/snowbound/classes", "/snowbound/WEB-INF", "/snowbound/user-config", "/snowbound/tomcat", "/snowbound/fonts"]
+VOLUME ["/tmp/vvcache", "/snowbound/classes", "/snowbound/WEB-INF", "/snowbound/js", "/snowbound/user-config", "/snowbound/tomcat", "/snowbound/fonts"]
 
 # Command to run when the container runs
 CMD ["/snowbound/run.sh"]

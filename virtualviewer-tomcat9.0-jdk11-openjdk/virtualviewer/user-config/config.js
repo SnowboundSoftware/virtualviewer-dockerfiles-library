@@ -1103,7 +1103,8 @@ define(["vvDefines"], function(vvDefines) {
             print:false,
             splitScreen:false,
             tabs:false,
-            xlsxPageLimited:false
+            xlsxPageLimited:false,
+            stamp:false
         },
         
         /**
