@@ -1,0 +1,1 @@
+Place additional fonts here. They will be loaded by the GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(font); call in VV.
