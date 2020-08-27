@@ -213,6 +213,7 @@ services:
 
     vv-alfresco:
         image: quay.io/snowbound/virtualviewer-alfresco:5.4-tomcat9.0-jdk11-openjdk-latest
+#        image: quay.io/snowbound/virtualviewer-alfresco:5.4.0.570-tomcat9.0-jdk11-openjdk
         links:
             - alfresco
             - share
