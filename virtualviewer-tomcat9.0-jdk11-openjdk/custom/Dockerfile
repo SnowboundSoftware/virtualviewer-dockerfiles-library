@@ -16,11 +16,16 @@ RUN sed -i 's/main/main contrib/' /etc/apt/sources.list && \
   apt-get update && \
   apt-get install apt-utils -y && \
   apt-get upgrade -y && \ 
-  apt-get install -y ttf-mscorefonts-installer && \
+  apt-get install -y ttf-mscorefonts-installer liblept5 libgomp1 && \
   fc-cache -f -v && \
   rm -rf /var/lib/apt/lists/* && \
   rm -rf $WEBAPPS/ROOT && \
   chmod +x /snowbound/run.sh
+
+# Install tesseract
+COPY tesseract_debian10/libtesseract.so.4.0.1 /usr/lib/x86_64-linux-gnu/libtesseract.so.4.0.1
+RUN ln -s /usr/lib/x86_64-linux-gnu/libtesseract.so.4.0.1 /usr/lib/x86_64-linux-gnu/libtesseract.so && ln -s /usr/lib/x86_64-linux-gnu/libtesseract.so.4.0.1 /usr/lib/x86_64-linux-gnu/libtesseract.so.4
+COPY tesseract_debian10/tessdata /usr/local/share/tessdata
 
 # Set labels
 LABEL "com.snowbound.docker.virtualviewer.vendor"="Snowbound Software Corporation" \

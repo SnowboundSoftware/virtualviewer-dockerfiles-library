@@ -126,6 +126,13 @@ define(["vvDefines"], function(vvDefines) {
          * @memberof vvConfig
          */
         copySelectedText: true,
+        
+        /**
+         * @member {boolean} enableCopyPasteBetweenSessions If true, pages can be copied and pasted between different tabs or windows (of the same browser).
+         * If false, page copy and paste only works within the same tab.
+         * @memberof vvConfig
+         */
+        enableCopyPasteBetweenSessions: true,
     
         /**
          * @member {number} vvConfig.guideLineWidth Guide Mode is a feature that displays movable horizontal and vertical lines on the current document,
@@ -177,6 +184,24 @@ define(["vvDefines"], function(vvDefines) {
          * @memberof vvConfig
          */
         zoomLock: true,
+        
+        /**
+         * @member {boolean} disableImageTabs Enable or disable image tabs and remove the tab bar above the document. 
+         * @memberof vvConfig
+         */
+        disableImageTabs: false,
+        
+        /**
+         * @member {boolean} disableToolbar Enable or disable the rendering of the top toolbar. 
+         * @memberof vvConfig
+         */
+        disableToolbar: false,
+        
+        /**
+         * @member {boolean} disableAnnToolbar Enable or disable the rendering of the annotation toolbar. 
+         * @memberof vvConfig
+         */        
+        disableAnnToolbar: false,
         
         /* 
          * -- ANNOTATIONS --
@@ -359,6 +384,13 @@ define(["vvDefines"], function(vvDefines) {
          * @memberof vvConfig
          */
         enableSingleClickImageRubberStamp: true,
+        
+        /**
+         * @member {boolean} enableStampAspectRatioLock enable or disable locking of the aspect ratio. This will force the image to never become
+         * mishapen when you resize it.
+         * @memberOf vvConfig
+         */
+        enableStampAspectRatioLock:true,
     
         /**
          * @member {object[]} textRubberStamps Define default text rubber stamps. All these values an be modified in User Preferences.
@@ -981,6 +1013,7 @@ define(["vvDefines"], function(vvDefines) {
          * @property {string} url The URI from which to load the stamp image.
          * @property {number} [width=The internally-defined width of the image] The width of the image.
          * @property {number} [height=The internally-defined height of the image] The height of the image.
+         * @property {string} [annotationId] An ID to define a stamp. This ID will be set to the annID property of every stamp annotation of this type.
          */
         /**
          * @member {ImageStamp[]} initialStamps Defines image rubber stamps to load and display at startup.
@@ -1041,6 +1074,16 @@ define(["vvDefines"], function(vvDefines) {
         /*
          *  -- OTHER -- 
          */    
+
+        /**
+         * @member {boolean} delayFirstPageLoad Normally, VirtualViewer requests the first page image and the document model
+         * in parallel, which results in a faster document load. This may result in more server load if the requested document
+         * is a Microsoft Office format and is not yet in the cache. Set this value to true in order to delay requesting any page images
+         * until the document model has finished loading. This may cause slightly worse load performance across the board,
+         * but will prevent redundant server work when processing Office documents.
+         * @memberof vvConfig
+         */
+        delayFirstPageLoad: false,
         
         /**
          * @member {number} maximumTimeoutsOnDocument If an operation on a document times out, or a stuck thread
@@ -1355,7 +1398,13 @@ define(["vvDefines"], function(vvDefines) {
          * @see vvConfig.helpWindowName
          * @memberof vvConfig
          */ 
-        helpWindowParams: "scrollbars=1,width=800,height=600"
+        helpWindowParams: "scrollbars=1,width=800,height=600",
+        
+        /*
+         * @member {number} canvasBufferSpace The amount of configurable buffer space around the canvas. This number should be under 20.
+         * @memberof vvConfig
+         */
+        canvasBufferSpace: 10
         };
 
     return vvConfig;

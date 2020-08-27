@@ -1,0 +1,58 @@
+
+<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://www.ehcache.org/v3'
+        xsi:schemaLocation="http://www.ehcache.org/v3 ../../../main/resources/ehcache-core.xsd">
+        
+    <cache alias="vvDocumentCache"> 
+        <key-type>java.lang.String</key-type>
+        <value-type>com.snowbound.clientcontentserver.DocumentIdAndContent</value-type>
+        
+        <expiry>
+            <!-- The below directive will auto-expire cache entries which haven't been used in 60 minutes -->
+            <tti unit="minutes">60</tti>
+        </expiry>
+        
+        <resources>
+            <!-- Using a 'unit' other than 'entries' below (MB, kB, GB, etc) will require walking the object 
+                 tree of each cache element on a put, which will decrease performance and increase transient memory
+                 usage. 
+                 
+                 See: http://www.ehcache.org/documentation/3.1/getting-started.html#byte-sized-heap
+                 -->
+            <heap unit="entries">20</heap> 
+        </resources>
+    </cache>
+    
+    <cache alias="vvOcrCache"> 
+        <key-type>java.lang.String</key-type>
+        <value-type>[B</value-type>
+                
+        <resources>
+            <!-- Using a 'unit' other than 'entries' below (MB, kB, GB, etc) will require walking the object 
+                 tree of each cache element on a put, which will decrease performance and increase transient memory
+                 usage. 
+                 
+                 See: http://www.ehcache.org/documentation/3.1/getting-started.html#byte-sized-heap
+                 -->
+            <heap unit="entries">20</heap> 
+        </resources>
+    </cache>
+    
+    
+    <!-- This cache stores responses from the content handler's validateCache method to limit the number
+        of calls to that method for the same document and type of cache action (storage or retrieval) during
+        the same user session. -->
+    <cache alias="vvValidationCache"> 
+        <key-type>java.lang.String</key-type>
+        <value-type>java.lang.Boolean</value-type>
+        
+        <expiry>
+            <!-- The below directive will auto-expire cache entries after five minutes in the cache -->
+            <ttl unit="minutes">5</ttl>
+        </expiry>
+        
+        <resources>
+            <heap unit="entries">10000</heap> 
+        </resources>
+    </cache>
+    
+</config>
