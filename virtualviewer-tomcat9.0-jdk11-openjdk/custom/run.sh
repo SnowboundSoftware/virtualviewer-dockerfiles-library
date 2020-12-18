@@ -33,9 +33,8 @@ echo Copying tomcat conf files
 cp -v /snowbound/tomcat/* -t $CATALINA_HOME/conf/
 
 # Copy in fonts
-echo Copying additional fonts
-mkdir $VVROOT/fonts/
-cp -v /snowbound/fonts/* -t $VVROOT/fonts/
+echo Symlinking mounted fonts
+ln -s /snowbound/fonts $VVROOT/fonts
 
 # Check for license
 if [ ! -f "$VVROOT/WEB-INF/lib/SnowboundLicense.jar" ]; then

@@ -400,6 +400,7 @@ define(["vvDefines"], function(vvDefines) {
          * @property {boolean} textRubberStamps[].fontBold Whether the text should be bolded.
          * @property {boolean} textRubberStamps[].fontItalic Whether the text should be italic.
          * @property {string} textRubberStamps[].fontColor A hex string, without the leading hash, of the font's color. For instance, "00FF00".
+         * @property {string} textRubberStamps[].fillColor A hex string, without the leading hash, of the stamp's background color, or null for a transparent background. 
          * @memberof vvConfig
          */
         textRubberStamps: [],
@@ -448,6 +449,7 @@ define(["vvDefines"], function(vvDefines) {
          * For instance, 0.5 for 50% opacity. Burned redactions will be fully opaque, but this value can configure the transparency 
          * of a redaction that is not yet burned into the image.
          * @property {string} textString The default initial text for a text annotation or sticky note annotation.
+         * @property {string} textBackgroundColor A hex color value, absent the leading hash, for the background fill color of text annotations; null for a transparent background.
          * @property {string} fontFace The font of the text in a text annotation or sticky note annotation.
          * @property {number} fontSize The size of the text in a text annotation or sticky note annotation.
          * @property {boolean} fontBold Whether the font in a text annotation or sticky note annotation is bolded.
@@ -475,6 +477,7 @@ define(["vvDefines"], function(vvDefines) {
             redactionOpacity: 0.5,
 
             textString: "Text",
+            textBackgroundColor: null,
 
             fontFace: "Arial",
             fontSize: 14,
@@ -584,6 +587,14 @@ define(["vvDefines"], function(vvDefines) {
          * @memberof vvConfig
          */
         useBrowserScaling: false,
+        
+        /**
+         * @member {boolean} enableJSScalingForIE Allow Internet Explorer to use Javascript image scaling when resizing. Javascript scaling
+         * is higher-quality than browser-scaling and puts less load on the server than serverScaling, but can be unreliable for some
+         * documents when using Internet Explorer due to the age of the browser.
+         * @memberof vvConfig
+         */
+        enableJSScalingForIE: false,
     
         /**
          * @member {"server"|"browser"|"js"} singleThreadedScalingMode An additional option for browsers that do not support 
@@ -669,6 +680,13 @@ define(["vvDefines"], function(vvDefines) {
          * @memberof vvConfig
          */
         printBurnAnnotations: true,
+        
+        /**
+         * @member {boolean} showFitToPageOption Whether to display the "fit to page" option in the print dialog. "Fit to page" will 
+         * force image PDF pages to a standard letter size and center images on the page.
+         * @memberof vvConfig
+         */
+        showFitToPageOption: false,
     
         /*
          * -- Document Notes / Thumbnails / Search  -- 

@@ -12,7 +12,7 @@ define([], function() {
      */
     vvDefines = {
         productName: "VirtualViewer HTML5",
-        productVersion: "5.4",
+        productVersion: "5.6",
         cacheBuster: false,
         annColorBlobSize: 15,
         annColorBlobSizeTouch: 40,
@@ -35,7 +35,7 @@ define([], function() {
         defaultGammaValue: 100,
         //default batch size if not set in config
         searchBatchSize: 50,
-        searchTimeout: 1000,
+        searchTimeout: 0,
         bogusImageURL: "resources/blank.gif",
         searchDefaultColor: "rgba(255,78,0,0.2)",
         searchSelectedColor: "rgba(255,255,0,0.2)",
@@ -109,6 +109,21 @@ define([], function() {
             crop: 8,
             overlay: 9,
             touchZoom: 10
+        },
+        
+        panToolPref: {
+            noPanTool: 0,
+            panToolWithoutScrollbars: 1,
+            panToolWithScrollbars: 2
+        },
+        
+        watermarkTag: {
+            USERNAME: "@@username@@",
+            TOTALPAGES: "@@totalPages@@",
+            PAGENUMBER: "@@pageNumber@@",
+            PRINTTIME: "@@printTime@@",
+            SERVERTIME: "@@serverTime@@",
+            DOCUMENTNAME: "@@documentName@@"
         },
 
         /**

@@ -229,6 +229,13 @@
             <param-name>pptFormat</param-name>
             <param-value>TIFF_LZW</param-value>
         </init-param>
+
+        <!-- HTML files may require a font source to be set manually. This should be an absolute path pointing to a directory of fonts that may
+            by used by RasterMaster to render HTML files. If not included, this parameter will default to the virtualviewer/fonts directory. -->
+        <init-param>
+            <param-name>htmlFontSourceDirectory</param-name>
+            <param-value></param-value>
+        </init-param>
         
         <!-- Custom image rubber stamps have been deprecated - admins should use the config.js parameter
              initialStamps or its related stamp API.-->
@@ -350,6 +357,34 @@
             <param-value>true</param-value>
         </init-param>
         -->
+        
+        <!-- Async Stream Buffer Thread Pool Configuration -->        
+        
+        <init-param>
+            <param-name>asyncStreamBufferCorePoolSize</param-name>
+            <param-value>5</param-value>
+        </init-param>
+        <init-param>
+            <param-name>asyncStreamBufferPrestartCoreThreads</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>asyncStreamBufferMaxPoolSize</param-name>
+            <param-value>30</param-value>
+        </init-param>
+        <init-param>
+            <param-name>asyncStreamBufferAllowCoreThreadsTimeout</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>asyncStreamBufferKeepAliveTime</param-name>
+            <param-value>1</param-value>
+        </init-param>
+        <init-param>
+            <param-name>asyncStreamBufferKeepAliveTimeUnits</param-name>
+            <param-value>MINUTES</param-value>
+        </init-param>
+        
     	
 		<!-- Only applicable to Alfresco -->
 		<init-param>
