@@ -12,7 +12,7 @@ define([], function() {
      */
     vvDefines = {
         productName: "VirtualViewer HTML5",
-        productVersion: "5.6",
+        productVersion: "5.6.2",
         cacheBuster: false,
         annColorBlobSize: 15,
         annColorBlobSizeTouch: 40,
@@ -279,7 +279,7 @@ define([], function() {
         /* Default ZoomLevels are only to be used if zoomLevels in config.js is missing or invalid */
         defaultZoomLevels: [2, 3, 4, 6, 8, 10, 15, 20, 30, 40, 50, 75, 100, 150, 200, 300, 400, 600,
                 800, 1000, 1500, 2000, 3000],
-        aboutDialogTextContents: "&reg;1996-2020 All Rights Reserved.  (licensing information). VirtualViewer and the VirtualViewer logo are trademarks of the Snowbound Software Corporation. All Rights Reserved. Some of the trademarks used under license from partner companies."
+        aboutDialogTextContents: "&reg;1996-2021 All Rights Reserved.  (licensing information). VirtualViewer and the VirtualViewer logo are trademarks of the Snowbound Software Corporation. All Rights Reserved. Some of the trademarks used under license from partner companies."
     };
     return vvDefines;
 });

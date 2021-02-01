@@ -4,7 +4,7 @@ version: '3'
 services:
   vv-java-tomcat:
     image: quay.io/snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest
-#    image: quay.io/snowbound/virtualviewer:5.6.0.269-tomcat9.0-jdk11-openjdk
+#    image: quay.io/snowbound/virtualviewer:5.6.2.339-tomcat9.0-jdk11-openjdk
     restart: always
     ports:
       - 8080:8080
