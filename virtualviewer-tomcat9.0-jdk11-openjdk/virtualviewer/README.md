@@ -16,46 +16,47 @@ Preferably in production, you will run this image on a Linux based Docker host s
 - [Evaluating VirtualViewer Docker on Linux](#evaluating-virtualviewer-docker-on-linux)
 - [Evaluating VirtualViewer Docker on macOS](#evaluating-virtualviewer-docker-on-macos)
 - [Evaluating VirtualViewer Docker on Windows](#evaluating-virtualviewer-docker-on-windows)
-    + [Note about Docker on Windows in VMware](#note-about-docker-on-windows-in-vmware)
-    + [Configuring](#configuring)
+    - [Note about Docker on Windows in VMware](#note-about-docker-on-windows-in-vmware)
+    - [Configuring](#configuring)
 - [`docker run` Examples](#docker-run-examples)
-  * [Sample Handler](#sample-handler)
-  * [Custom Content Handler](#custom-content-handler)
+  - [Sample Handler](#sample-handler)
+  - [Custom Content Handler](#custom-content-handler)
 - [Thread Timeout](#thread-timeout)
-  * [Edit server.xml](#edit-serverxml)
-  * [Example](#example)
-  * [Reference](#reference)
+  - [Edit server.xml](#edit-serverxml)
+  - [Example](#example)
+  - [Reference](#reference)
 - [Docker Resource Allocation](#docker-resource-allocation)
-  * [Docker Arguments](#docker-arguments)
-    + [`-m` or `--memory=`  - Memory Allocation](#-m-or---memory----Memory-Allocation)
-    + [`--cpus=` - Logical CPU core count](#--cpus---Logical-CPU-core-count)
-    + [Example](#example-1)
-  * [Reference](#reference-1)
+  - [Docker Arguments](#docker-arguments)
+    - [`-m` or `--memory=`  - Memory Allocation](#-m-or---memory----memory-allocation)
+    - [`--cpus=` - Logical CPU core count](#--cpus---logical-cpu-core-count)
+    - [Example](#example-1)
+  - [Reference](#reference-1)
 - [Port Mapping](#port-mapping)
-  * [Standard Mapping](#standard-mapping)
-  * [Different Port](#different-port)
-  * [Different IP and Different Port](#different-ip-and-different-port)
+  - [Standard Mapping](#standard-mapping)
+  - [Different Port](#different-port)
+  - [Different IP and Different Port](#different-ip-and-different-port)
 - [Volumes](#volumes)
-  * [Required Volume Definitions](#required-volume-definitions)
-    + [`/snowbound/classes`](#snowboundclasses)
-  * [Optional Volume Definitions](#optional-volume-definitions)
-    + [`/snowbound/fonts`](#snowboundfonts)
-    + [`/snowbound/js`](#snowboundjs)
-    + [`/snowbound/tomcat`](#snowboundtomcat)
-    + [`/snowbound/user-config`](#snowbounduser-config)
-    + [`/tmp/vvcache`](#tmpvvcache)
-    + [`/snowbound/WEB-INF`](#snowboundweb-inf)
+  - [Extracting Base Configuration Files](#extracting-base-configuration-files)
+  - [Required Volume Definitions](#required-volume-definitions)
+    - [`/snowbound/classes`](#snowboundclasses)
+  - [Optional Volume Definitions](#optional-volume-definitions)
+    - [`/snowbound/fonts`](#snowboundfonts)
+    - [`/snowbound/js`](#snowboundjs)
+    - [`/snowbound/tomcat`](#snowboundtomcat)
+    - [`/snowbound/user-config`](#snowbounduser-config)
+    - [`/tmp/vvcache`](#tmpvvcache)
+    - [`/snowbound/WEB-INF`](#snowboundweb-inf)
 - [Inspecting an Image](#inspecting-an-image)
-  * [Label Names](#label-names)
-    + [`com.snowbound.docker.virtualviewer.base_image`](#comsnowbounddockervirtualviewerbase_image)
-    + [`com.snowbound.docker.virtualviewer.build_host`](#comsnowbounddockervirtualviewerbuild_host)
-    + [`com.snowbound.docker.virtualviewer.jenkins_buildnumber`](#comsnowbounddockervirtualviewerjenkins_buildnumber)
-    + [`com.snowbound.docker.virtualviewer.product`](#comsnowbounddockervirtualviewerproduct)
-    + [`com.snowbound.docker.virtualviewer.product_version`](#comsnowbounddockervirtualviewerproduct_version)
-    + [`com.snowbound.docker.virtualviewer.rm_java_artifact_version`](#comsnowbounddockervirtualviewerrm_java_artifact_version)
-    + [`com.snowbound.docker.virtualviewer.vendor`](#comsnowbounddockervirtualviewervendor)
-    + [`com.snowbound.docker.virtualviewer.vv_java_commit_id`](#comsnowbounddockervirtualviewervv_java_commit_id)
-+ [Building Custom VirtualViewer Images](#building-custom-virtualviewer-images)
+  - [Label Names](#label-names)
+    - [`com.snowbound.docker.virtualviewer.base_image`](#comsnowbounddockervirtualviewerbase_image)
+    - [`com.snowbound.docker.virtualviewer.build_host`](#comsnowbounddockervirtualviewerbuild_host)
+    - [`com.snowbound.docker.virtualviewer.jenkins_buildnumber`](#comsnowbounddockervirtualviewerjenkins_buildnumber)
+    - [`com.snowbound.docker.virtualviewer.product`](#comsnowbounddockervirtualviewerproduct)
+    - [`com.snowbound.docker.virtualviewer.product_version`](#comsnowbounddockervirtualviewerproduct_version)
+    - [`com.snowbound.docker.virtualviewer.rm_java_artifact_version`](#comsnowbounddockervirtualviewerrm_java_artifact_version)
+    - [`com.snowbound.docker.virtualviewer.vendor`](#comsnowbounddockervirtualviewervendor)
+    - [`com.snowbound.docker.virtualviewer.vv_java_commit_id`](#comsnowbounddockervirtualviewervv_java_commit_id)
+- [Building Custom VirtualViewer Images](#building-custom-virtualviewer-images)
 
 # Minimum Requirements
 
@@ -238,7 +239,27 @@ If you need to bind to a specific IP address, use `-p 10.20.30.40:8085:8080`
 
 Volumes are the preferred mechanism for persisting data generated by and used by Docker containers. The VirtualViewer Docker image requires, at the minimum, a `SnowboundLicense.jar` in the `classes` mount. If no license is loaded, you will get `Page Not Found` in the document library and `Image failed to load` when you click on the document. Other mount points are entirely optional.
 
+## Extracting Base Configuration Files
 
+In order to create custom configuration overlays with the Volume information below, you will need to first extract the configuration files that VirtualViewer ships with.
+
+```
+# start a temporary virtualviewer container
+docker run -d --rm --name=vvtemp uay.io/snowbound/virtualviewer-dev:5.7.0-latest
+
+# create a spot to put custom configurations
+mkdir -p snowbound/tomcat snowbound/classes snowbound/tomcat snowbound/user-config snowbound/WEB-INF
+
+# copy the default configurations out to our host
+docker cp vvtemp:/usr/local/tomcat/webapps/virtualviewer/user-config snowbound/
+docker cp vvtemp:/usr/local/tomcat/conf/server.xml snowbound/tomcat/
+docker cp vvtemp:/usr/local/tomcat/webapps/virtualviewer/WEB-INF/web.xml snowbound/WEB-INF/
+
+# stop the temporary container
+docker stop vvtemp
+```
+
+You may now use these directories as the basis for your volume configurations as documented below.
 
 ## Required Volume Definitions
 
