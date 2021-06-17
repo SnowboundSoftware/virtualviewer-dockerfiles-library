@@ -60,7 +60,6 @@ Preferably in production, you will run this image on a Linux based Docker host s
 
 # Minimum Requirements
 
-* A `quay.io` login from Snowbound Software
 * A valid, non-expired, `SnowboundLicense.jar` file
   * If no license is loaded, you will get `Page Not Found` in the document library and `Image failed to load` when you click on the document.
 * Preferably, a Linux VM running Docker.  We support `Ubuntu 18.04 LTS` & `VMware Photon OS 3.0`.
@@ -127,7 +126,7 @@ Below are a few examples of how to run Snowbound VirtualViewer on Docker. Before
 
 ## Sample Handler
 
-1. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest`.
+1. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest`.
 2. Open a browser to http://localhost:8080/virtualviewer.
 
 
@@ -136,7 +135,7 @@ Below are a few examples of how to run Snowbound VirtualViewer on Docker. Before
 
 1. Copy your custom content handler`.jar`  and required dependencies into the newly created `classes` directory.
 2. In the `WEB-XML` directory, edit the parameter `contentHandlerClass` and replace `com.snowbound.contenthandler.example.FileContentHandler` with the classpath of your custom content handler.
-3. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest`Open a browser to http://localhost:8080/virtualviewer.
+3. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest`Open a browser to http://localhost:8080/virtualviewer.
 
 
 
@@ -165,7 +164,7 @@ You will need to add the `-v <PATH TO TOMCAT>:/snowbound/tomcat` argument to you
 
 ## Example
 
-`docker run -it -p 8080:8080 -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/classes:/snowbound/classes -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/tomcat:/snowbound/tomcat quay.io/snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest`
+`docker run -it -p 8080:8080 -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/classes:/snowbound/classes -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/tomcat:/snowbound/tomcat snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest`
 
 
 
@@ -199,7 +198,7 @@ Specify how much of the available CPU resources a container can use. For instanc
 ### Example
 
 `docker run -it -p 8080:8080 -v /home/dpowers/classes:/snowbound/classes --mount type=tmpfs,destination=/tmp
-/vvcache -m 512m --cpus=1 quay.io/snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest`
+/vvcache -m 512m --cpus=1 snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest`
 
 
 
@@ -245,7 +244,7 @@ In order to create custom configuration overlays with the Volume information bel
 
 ```
 # start a temporary virtualviewer container
-docker run -d --rm --name=vvtemp uay.io/snowbound/virtualviewer-dev:5.7.0-latest
+docker run -d --rm --name=vvtemp snowbound/virtualviewer-dev:5.7.0-latest
 
 # create a spot to put custom configurations
 mkdir -p snowbound/tomcat snowbound/classes snowbound/tomcat snowbound/user-config snowbound/WEB-INF
