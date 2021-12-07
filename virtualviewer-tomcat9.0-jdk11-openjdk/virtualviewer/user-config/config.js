@@ -47,9 +47,18 @@ define(["vvDefines"], function(vvDefines) {
 
         /** 
          * @member {boolean} imageScrollBars Turn on scroll bars for the image display. This disables the pan tool.
+         * Please note that this variable is deprecated and will soon be removed.
          * @memberof vvConfig
          */ 
         imageScrollBars: true,
+        
+        /**
+         * @member {number} panToolPreference There are 3 possible values for this variable: vvDefines.panToolPref.noPanTool,
+         * vvDefines.panToolPref.panToolWithoutScrollbars, and vvDefines.panToolPref.panToolWithScrollbars. vvDefines.panToolPref.noPanTool
+         * disables the pan tool. vvDefines.panToolPref.panToolWithoutScrollbars and vvDefines.panToolPref.panToolWithScrollbars both 
+         * enable the pan tool with or without scrollbars.   
+         */
+        panToolPreference: vvDefines.panToolPref.noPanTool,
     
         /**
          * @member {boolean} invertedPanScrollX The pan tool allows the user to scroll without scrollbars. This setting
@@ -83,6 +92,7 @@ define(["vvDefines"], function(vvDefines) {
          * @memberof vvConfig
          */
         continuousScrollBufferBeforeSize: 1,
+
         /**
          * @member {number} continuousScrollBufferAfterSize The number of pages to preload after the current page, to provide a smoother
          * experience when scrolling down through the document. Note that browsers have limits on how many requests can be sent out concurrently
@@ -91,6 +101,13 @@ define(["vvDefines"], function(vvDefines) {
          * @memberof vvConfig
          */
         continuousScrollBufferAfterSize: 3, 
+
+        /**
+         * @member {number} maxNumberOfTabs The maximum number of documents allowed to be open at the same time. 
+         * 
+         * @memberof vvConfig
+         */
+        maxNumberOfTabs: 10,
 
         /**
          * @member {boolean} pageManipulations Enable/disable page manipulation. If this is false, users may not rearrange pages in
@@ -202,17 +219,39 @@ define(["vvDefines"], function(vvDefines) {
          * @memberof vvConfig
          */        
         disableAnnToolbar: false,
+
+        /**
+         * @member {boolean} synchronousInit Force the very first server call, which retrieves server configuration, to run synchronously. This will
+         * block initialization until it is complete, and will ensure that only one server session (seen in the JSESSIONID cookie) is created. 
+         * While this won't necessarily cause a large performance hit, it should be set cautiously.
+         * @memberof vvConfig
+         */
+        synchronousInit: false,
         
         /* 
          * -- ANNOTATIONS --
          */   
         
         /**
-         * @member {boolean} readOnlyAnnotationMode Enable or disbale read-only annotation mode. In read-only mode, users
+         * @member {boolean} readOnlyAnnotationMode Enable or disable read-only annotation mode. In read-only mode, users
          * cannot edit, move or create annotations. 
          * @memberof vvConfig
          */
         readOnlyAnnotationMode: false,
+
+        /**
+         * @member {boolean|null} enableCustomOpacity Enable or disable UI for customizable annotation opacity. If enabled, most solid-color annotations can
+         * be set to transparent or semi-transparent. If disabled, there will be no transparency controls for most annotations, although text
+         * annotations can still be set to either a colored or fully transparent background.
+         * 
+         * By default this is null - custom opacity will be enabled if the server's annotation output format supports it. (Currently only the Snowbound 
+         * Annotation XML format supports custom opacity.) This behavior can be overridden with this configuration: if you're using Snowbound XML but don't want
+         * custom opacity, set this to false; if you are using a format that doesn't support saving opacity but you want to allow users to create transparent
+         * annotations for immediate export, set this to true.
+         * 
+         * @memberof vvConfig
+         */
+        enableCustomOpacity: null,
     
         /**
          * @member {boolean} showAnnNavToggle A small panel in the page thumbnails tab allows the user to navigate between annotations on the
@@ -274,7 +313,7 @@ define(["vvDefines"], function(vvDefines) {
         includeDocumentNotes: false,
 
         /**
-         * @member {boolean} includeDocumentNotes A default value for the Include Watermarks checkbox in Save/Export/Email dialogs. If this 
+         * @member {boolean} includeWatermarks A default value for the Include Watermarks checkbox in Save/Export/Email dialogs. If this 
          * is checked, watermarks will be included as part of the exported image.
          * @memberof vvConfig
          */
@@ -466,6 +505,7 @@ define(["vvDefines"], function(vvDefines) {
             lineWidth: 3,
 
             fillColor: "FE0000",
+            fillOpacity: 1,
 
             stickyFillColor: "FCEFA1",
             stickyMargin: 10,
@@ -732,6 +772,12 @@ define(["vvDefines"], function(vvDefines) {
          * @memberof vvConfig
          */
         showThumbnailPanel: true,
+        
+        /*
+         * @member {boolean} leftSideThumbPanel Enable or disable the thumbnail panel being displayed on the left side of the viewer.
+         * @memberof vvConfig
+         */
+        leftSideThumbPanel: false,
 
         /**
          * @member {boolean} showPageThumbnails Enable or disable the thumbnail tab showing page thumbnails.
@@ -1126,6 +1172,19 @@ define(["vvDefines"], function(vvDefines) {
         disableToolbarHamburger: false,
         
         /**
+         * @member {number} midHorizontalThreshold This allows the user to set a window width at which the toolbar buttons collapse into groups when the window is resized
+         * @memberOf vvConfig
+         */
+        windowHorizontalThreshold: 1200,
+        
+        
+        /**
+         * @member {number} midVerticalThreshold This allows the user to set a a window height at which the vertical toolbar buttons collapse into groups when the window is resized
+         * @memberof vvConfig
+         */
+        windowVerticalThreshold: 750,
+       
+        /**
          * @member {object} disableErrorModals This is an object that stores many booleans, each one related to a set of error modals.
          * If true, then modals will not pop up for the selected modals. 
          * NOTE: server and client are hammer options and should probably not be used unless you want to disable EVERYTHING from that origin.
@@ -1145,7 +1204,6 @@ define(["vvDefines"], function(vvDefines) {
          * @property {boolean} print Disable all modals originating from printing
          * @property {boolean} splitScreen Disable all modals originating from split screen
          * @property {boolean} tabs Disable all modals originating from document tabs
-         * @property {boolean} xlsxPageLimited Disable all modals originating from XLSX limiting
          */
         disableErrorModals:{
             server:false,
@@ -1164,7 +1222,6 @@ define(["vvDefines"], function(vvDefines) {
             print:false,
             splitScreen:false,
             tabs:false,
-            xlsxPageLimited:false,
             stamp:false
         },
         
@@ -1312,6 +1369,12 @@ define(["vvDefines"], function(vvDefines) {
          */
         enableCrop: true,
             
+        /**
+         * @member {boolean} disableRecentlyViewedCookien This setting will not save or load the display
+         * names cookie at all if true.
+         * @memberof vvConfig
+         */
+        disableRecentlyViewedCookie: false,
         
         /**
          * @member {boolean} preferServerDisplayName This setting will preferentially load display names from the server, 

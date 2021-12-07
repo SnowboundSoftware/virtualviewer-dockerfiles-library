@@ -12,19 +12,19 @@ define([], function() {
      */
     vvDefines = {
         productName: "VirtualViewer HTML5",
-        productVersion: "5.6.2",
+        productVersion: "5.8",
         cacheBuster: false,
         annColorBlobSize: 15,
         annColorBlobSizeTouch: 40,
         annColorRowSize: 10,
         annMinimizeButtonSize: 14,
-        maxNumberOfTabs: 10,
         autoSaveAnnotations: false,
         mostRecentlyViewedListLength: 10,
         autoLayerName: "AutoLayer",
         redactionLayerPrefix: "vvRedaction",
         hideRedactionLayerFromManager: true,
         thumbnailSize: 140,
+        fullThumbnailSize: 400,
         ie9DrawDelay: 100,
         minTextAnnDrawSize: 10,
         idmMax: 10000,
@@ -74,7 +74,9 @@ define([], function() {
             SANN_FILLED_POLYGON: "FilledPolygon",
             SANN_RECTANGLE: "Rectangle",
             SANN_ELLIPSE: "Ellipse",
-            SANN_POLYGON: "Polygon",
+            SANN_POLYGON: "Polygon"
+        },
+        unsupportedAnnotationTypes:{
             SANN_TRANSPARENT_BITMAP: "TransparentBitmap",
             SANN_BUBBLE: "Bubble",
             SANN_CLOUD_EDIT: "Cloud",

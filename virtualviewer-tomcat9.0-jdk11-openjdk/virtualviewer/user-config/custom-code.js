@@ -40,7 +40,7 @@ if (typeof beforeVirtualViewerInit !== "function") {
     function beforeVirtualViewerInit() {
         // For example, to open VirtualViewer with specified documents, set the config.js parameter,
         // and modify the following snippet of code:
-
+        
         // var mySpecifiedDocuments = ["image.jpeg", "help.doc"];
         // virtualViewer.initSpecifiedDocuments(mySpecifiedDocuments);        
     };

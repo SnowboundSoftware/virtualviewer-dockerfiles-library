@@ -1,10 +1,8 @@
 # Running VirtualViewer on Docker
 
-Below are two examples of how to run VirtualViewer in Docker. Before trying either example, be sure to request a `quay.io` login from Snowbound.
+Below are two examples of how to run VirtualViewer in Docker. If you are running Docker on Linux, skip to the Examples section.
 
-If you are running Docker on Linux, skip to the Examples section.
-
-Preferably in production, you will run this image on a Linux based Docker host such as VMware Photon. If you are using Docker on macOS or Windows, it is only recommended to run VirtualViewer this way for evaluation purposes. The default configuration does not provide enough memory or proper permissions. See below for more information.
+Preferably in production, you will run this image on a Linux based Docker host such as Debian or Ubuntu LTS. If you are using Docker on macOS or Windows, it is only recommended to run VirtualViewer this way for evaluation purposes. The default configuration does not provide enough memory or proper permissions. See below for more information.
 
 
 
@@ -16,64 +14,62 @@ Preferably in production, you will run this image on a Linux based Docker host s
 - [Evaluating VirtualViewer Docker on Linux](#evaluating-virtualviewer-docker-on-linux)
 - [Evaluating VirtualViewer Docker on macOS](#evaluating-virtualviewer-docker-on-macos)
 - [Evaluating VirtualViewer Docker on Windows](#evaluating-virtualviewer-docker-on-windows)
-    - [Note about Docker on Windows in VMware](#note-about-docker-on-windows-in-vmware)
-    - [Configuring](#configuring)
+    + [Note about Docker on Windows in VMware](#note-about-docker-on-windows-in-vmware)
+    + [Configuring](#configuring)
 - [`docker run` Examples](#docker-run-examples)
-  - [Sample Handler](#sample-handler)
-  - [Custom Content Handler](#custom-content-handler)
+  * [Sample Handler](#sample-handler)
+  * [License as Environmental Variable](#license-as-environmental-variable)
+  * [Custom Content Handler](#custom-content-handler)
 - [Thread Timeout](#thread-timeout)
-  - [Edit server.xml](#edit-serverxml)
-  - [Example](#example)
-  - [Reference](#reference)
+  * [Edit server.xml](#edit-serverxml)
+  * [Example](#example)
+  * [Reference](#reference)
 - [Docker Resource Allocation](#docker-resource-allocation)
-  - [Docker Arguments](#docker-arguments)
-    - [`-m` or `--memory=`  - Memory Allocation](#-m-or---memory----memory-allocation)
-    - [`--cpus=` - Logical CPU core count](#--cpus---logical-cpu-core-count)
-    - [Example](#example-1)
-  - [Reference](#reference-1)
+  * [Docker Arguments](#docker-arguments)
+    + [`-m` or `--memory=`  - Memory Allocation](#-m-or---memory----Memory-Allocation)
+    + [`--cpus=` - Logical CPU core count](#--cpus---Logical-CPU-core-count)
+    + [Example](#example-1)
+  * [Reference](#reference-1)
 - [Port Mapping](#port-mapping)
-  - [Standard Mapping](#standard-mapping)
-  - [Different Port](#different-port)
-  - [Different IP and Different Port](#different-ip-and-different-port)
-- [Volumes](#volumes)
-  - [Extracting Base Configuration Files](#extracting-base-configuration-files)
-  - [Required Volume Definitions](#required-volume-definitions)
-    - [`/snowbound/classes`](#snowboundclasses)
-  - [Optional Volume Definitions](#optional-volume-definitions)
-    - [`/snowbound/fonts`](#snowboundfonts)
-    - [`/snowbound/js`](#snowboundjs)
-    - [`/snowbound/tomcat`](#snowboundtomcat)
-    - [`/snowbound/user-config`](#snowbounduser-config)
-    - [`/tmp/vvcache`](#tmpvvcache)
-    - [`/snowbound/WEB-INF`](#snowboundweb-inf)
+  * [Standard Mapping](#standard-mapping)
+  * [Different Port](#different-port)
+  * [Different IP and Different Port](#different-ip-and-different-port)
+- [Volume Definitions](#volume-definitions)
+  + [`/snowbound/classes`](#snowboundclasses)
+  + [`/snowbound/fonts`](#snowboundfonts)
+  + [`/snowbound/js`](#snowboundjs)
+  + [`/snowbound/tomcat`](#snowboundtomcat)
+  + [`/snowbound/user-config`](#snowbounduser-config)
+  + [`/tmp/vvcache`](#tmpvvcache)
+  + [`/snowbound/WEB-INF`](#snowboundweb-inf)
 - [Inspecting an Image](#inspecting-an-image)
-  - [Label Names](#label-names)
-    - [`com.snowbound.docker.virtualviewer.base_image`](#comsnowbounddockervirtualviewerbase_image)
-    - [`com.snowbound.docker.virtualviewer.build_host`](#comsnowbounddockervirtualviewerbuild_host)
-    - [`com.snowbound.docker.virtualviewer.jenkins_buildnumber`](#comsnowbounddockervirtualviewerjenkins_buildnumber)
-    - [`com.snowbound.docker.virtualviewer.product`](#comsnowbounddockervirtualviewerproduct)
-    - [`com.snowbound.docker.virtualviewer.product_version`](#comsnowbounddockervirtualviewerproduct_version)
-    - [`com.snowbound.docker.virtualviewer.rm_java_artifact_version`](#comsnowbounddockervirtualviewerrm_java_artifact_version)
-    - [`com.snowbound.docker.virtualviewer.vendor`](#comsnowbounddockervirtualviewervendor)
-    - [`com.snowbound.docker.virtualviewer.vv_java_commit_id`](#comsnowbounddockervirtualviewervv_java_commit_id)
-- [Building Custom VirtualViewer Images](#building-custom-virtualviewer-images)
+  * [Label Names](#label-names)
+    + [`com.snowbound.docker.virtualviewer.base_image`](#comsnowbounddockervirtualviewerbase_image)
+    + [`com.snowbound.docker.virtualviewer.build_host`](#comsnowbounddockervirtualviewerbuild_host)
+    + [`com.snowbound.docker.virtualviewer.ci_buildnumber`](#comsnowbounddockervirtualviewerci_buildnumber)
+    + [`com.snowbound.docker.virtualviewer.product`](#comsnowbounddockervirtualviewerproduct)
+    + [`com.snowbound.docker.virtualviewer.product_version`](#comsnowbounddockervirtualviewerproduct_version)
+    + [`com.snowbound.docker.virtualviewer.rm_java_artifact_version`](#comsnowbounddockervirtualviewerrm_java_artifact_version)
+    + [`com.snowbound.docker.virtualviewer.vendor`](#comsnowbounddockervirtualviewervendor)
+    + [`com.snowbound.docker.virtualviewer.vv_java_commit_id`](#comsnowbounddockervirtualviewervv_java_commit_id)
++ [Building Custom VirtualViewer Images](#building-custom-virtualviewer-images)
 
 # Minimum Requirements
 
-* A valid, non-expired, `SnowboundLicense.jar` file
-  * If no license is loaded, you will get `Page Not Found` in the document library and `Image failed to load` when you click on the document.
-* Preferably, a Linux VM running Docker.  We support `Ubuntu 18.04 LTS` & `VMware Photon OS 3.0`.
-* At least 4 logical CPUs
-* At least 4 GB of  memory (Preferably 8 GB if you plan to process large documents)
-* At least 8 GB of disk space for VirtualViewer (Preferably 32 GB)
-  * Additional space for content will be dependent on your project requirements
-  * Additional space for tomcat logs will be dependent on your logging strategy
+* A valid, non-expired, `slicense.json` file
+  * If no license is loaded, every page will have the watermark `Snowbound Software Evaluation`.
+* Preferably, a Linux VM running Docker.  We support `Ubuntu 18.04 LTS` and `Ubuntu 20.04 LTS`.
+* At least 4 logical CPUs.
+* At least 4 GB of  memory (Preferably 8 GB if you plan to process large documents).
+* At least 8 GB of disk space for VirtualViewer (Preferably 32 GB).
+  * Additional space for content will be dependent on your project requirements.
+  * Additional space for tomcat logs will be dependent on your logging strategy.
 
 
 
 # Evaluating VirtualViewer Docker on Linux
 
-This configuration will give you the best results. Go go [here](#docker-run-examples) to get started.
+This configuration will give you the best results. Go [here](#docker-run-examples) to get started.
 
 
 
@@ -82,10 +78,10 @@ This configuration will give you the best results. Go go [here](#docker-run-exam
 The default resource allocations that Docker for macOS comes configured with is not quite enough to see VirtualViewer perform properly. Please make the following adjustments.
 
 1. Open Docker `Preferences`
-2. Open the `File Sharing` tab and make sure that you can access the path that you have downloaded the `SnowboundLicense.jar` to. By default it will be somewhere in `/Users` which is already enabled.
+2. Open the `File Sharing` tab and make sure that you can access the path that you have downloaded the `slicense.json` to. By default it will be somewhere in `/Users` which is already enabled.
 3. Select the `Advanced` tab and adjust `Memory` to `4096MB` and `CPUs` to at least `2`.
 4. Click `Apply` and wait for Docker to restart.
-5. Go go [here](#docker-run-examples) to get started.
+5. Go [here](#docker-run-examples) to get started.
 
 
 
@@ -95,7 +91,7 @@ The default resource allocations that Docker for macOS comes configured with is 
 
 ### Note about Docker on Windows in VMware
 
-Note that Docker on Windows in a Virtual Machine such as VMware requires nested virtualization. Docker on Windows requires a Hyper-V VM to run Docker. We 100% guarantee that VirtualViewer will run unacceptable in this configuration if at all. If you need to evaluate VirtualViewer on a virtual machine, use a Linux distribution such as Ubuntu 18.04 LTS or VMware Photon OS 3.
+Note that Docker on Windows in a Virtual Machine such as VMware requires nested virtualization. Docker on Windows requires a Hyper-V VM to run Docker. We 100% guarantee that VirtualViewer will run unacceptable in this configuration if at all. If you need to evaluate VirtualViewer on a virtual machine, use a Linux distribution such as Ubuntu 20.04 LTS.
 
 
 
@@ -104,13 +100,14 @@ Note that Docker on Windows in a Virtual Machine such as VMware requires nested 
 The default resource allocations that Docker for Windows comes configured with is not quite enough to see VirtualViewer perform properly. Please make the following adjustments.
 
 1. Open Docker `Settings`
-2. Select the `Shared Drives` tab and enable the drive where your `SnowboundLicense.jar` and configuration files are located. Likely `C:\`
+2. Select the `Shared Drives` tab and enable the drive where your `slicense.jar` and configuration files are located. Likely `C:\`
    - You will be prompted for your Windows credentials.
    - Be aware that Docker on Windows mounts volumes over CIFS as `0777` or `a+rwx`. This is not configurable and can have security implications. This is one reason why we do not recommend using Docker for Windows in production.
-3. In Docker for macOS open the `File Sharing` tab and make sure that you can access the path that you have downloaded the `SnowboundLicense.jar` to. By default it will be somewhere in `/Users` which is already enabled.
+3. In Docker for macOS open the `File Sharing` tab and make sure that you can access the path that you have downloaded the `slicense.json` to. By default it will be somewhere in `/Users` which is already enabled.
 4. Select the `Advanced` tab and adjust `Memory` to `4096MB` and `CPUs` to at least `2`.
+   - This option may not be required under WSL2
 5. Click `Apply` and wait for the Docker Hyper-V virtual machine to restart.
-6. Go go [here](#docker-run-examples) to get started.
+6. Go [here](#docker-run-examples) to get started.
 
 
 
@@ -119,14 +116,25 @@ The default resource allocations that Docker for Windows comes configured with i
 Below are a few examples of how to run Snowbound VirtualViewer on Docker. Before running any example, be sure to do the following first
 
 1. Clone this repo to the machine you will run docker (or download the ZIP and extract it)
-2. Log into `quay.io` if you have not already done so using `docker login quay.io`.
-3. Copy your `SnowboundLicense.jar` into the newly created `classes` directory.
+2. Copy your `slicense.json` file into the newly created `classes` directory.
+   - Optionally set the license as an environmental variable. See example below.
 
 
 
 ## Sample Handler
 
-1. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest`.
+1. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest`.
+2. Open a browser to http://localhost:8080/virtualviewer.
+
+
+
+## License as Environmental Variable
+
+1. Run `docker run -it -p 8080:8080 --env SLICENSE="CONTENTS OF SLICENSE.JSON" quay.io/snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest`.
+   - You will need to escape `"` as `\"` and place the license within quotes.
+   - Example
+      - `export SLICENSE='{"SerialNumber":"1294a340-e3b2-4366-89b6-0fe71aae3ffb","Company":"Snowbound Software","OrderNumber":"Documentation","License_ExpirationDate":"10-20-2021","Maintenance_ExpirationDate":"10-20-2021","Products":["RasterMasterJava","VirtualViewerJava"],"LicenseType":"None","OEM":"","CanOEM":false},"rastermaster":{"Major":-1,"Minor":-1,"Formats":["standard","annotation","svg"]},"virtualviewer":{"Major":-1,"Minor":-1},"Signature":"BAoYP3sCpJGFVVDlhqRa6XKWZ9od0HK9ngiWFN9EMZjIftrgOrYm9SIy58HHabRwXE/Cr5ClQcILAjT03XJ0Ndedt253PLtJmjVSD/5YhFQgCk4H4WUhxE1llqY+wL5eD6qBa8ekKk6pD5jT/7hZQvTvY7bbcsgL/54ndZIII6kg51qkfVCmu/KNFsDULWn8FVI3eyJc/AUZK1cYpOFykvZxux4uCOeloMRspeKkV+tXvagP/P9E50AdvlvsdjYOsLY2YrVinyOGDEWlwWj/neT/TG0+Qr0quOnrt3MxnyPKKsy8y0AN/ysMGmHcSF1HOQi6wxgG2rn8tbJfZ/aqeQ=="}'`
+      - `docker run -it -p 8080:8080 --env SLICENSE=$SLICENSE quay.io/snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest`
 2. Open a browser to http://localhost:8080/virtualviewer.
 
 
@@ -135,7 +143,8 @@ Below are a few examples of how to run Snowbound VirtualViewer on Docker. Before
 
 1. Copy your custom content handler`.jar`  and required dependencies into the newly created `classes` directory.
 2. In the `WEB-XML` directory, edit the parameter `contentHandlerClass` and replace `com.snowbound.contenthandler.example.FileContentHandler` with the classpath of your custom content handler.
-3. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest`Open a browser to http://localhost:8080/virtualviewer.
+3. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest`
+4. Open a browser to http://localhost:8080/virtualviewer.
 
 
 
@@ -164,7 +173,7 @@ You will need to add the `-v <PATH TO TOMCAT>:/snowbound/tomcat` argument to you
 
 ## Example
 
-`docker run -it -p 8080:8080 -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/classes:/snowbound/classes -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/tomcat:/snowbound/tomcat snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest`
+`docker run -it -p 8080:8080 -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.8.0/classes:/snowbound/classes -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.8.0/tomcat:/snowbound/tomcat quay.io/snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest`
 
 
 
@@ -198,7 +207,7 @@ Specify how much of the available CPU resources a container can use. For instanc
 ### Example
 
 `docker run -it -p 8080:8080 -v /home/dpowers/classes:/snowbound/classes --mount type=tmpfs,destination=/tmp
-/vvcache -m 512m --cpus=1 snowbound/virtualviewer:5.6-tomcat9.0-jdk11-openjdk-latest`
+/vvcache -m 512m --cpus=1 quay.io/snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest`
 
 
 
@@ -234,45 +243,21 @@ If you need to bind to a specific IP address, use `-p 10.20.30.40:8085:8080`
 
 
 
-# Volumes
+# Volume Definitions
 
-Volumes are the preferred mechanism for persisting data generated by and used by Docker containers. The VirtualViewer Docker image requires, at the minimum, a `SnowboundLicense.jar` in the `classes` mount. If no license is loaded, you will get `Page Not Found` in the document library and `Image failed to load` when you click on the document. Other mount points are entirely optional.
+Volumes are the preferred mechanism for persisting data generated by and used by Docker containers.
 
-## Extracting Base Configuration Files
 
-In order to create custom configuration overlays with the Volume information below, you will need to first extract the configuration files that VirtualViewer ships with.
-
-```
-# start a temporary virtualviewer container
-docker run -d --rm --name=vvtemp snowbound/virtualviewer-dev:5.7.0-latest
-
-# create a spot to put custom configurations
-mkdir -p snowbound/tomcat snowbound/classes snowbound/tomcat snowbound/user-config snowbound/WEB-INF
-
-# copy the default configurations out to our host
-docker cp vvtemp:/usr/local/tomcat/webapps/virtualviewer/user-config snowbound/
-docker cp vvtemp:/usr/local/tomcat/conf/server.xml snowbound/tomcat/
-docker cp vvtemp:/usr/local/tomcat/webapps/virtualviewer/WEB-INF/web.xml snowbound/WEB-INF/
-
-# stop the temporary container
-docker stop vvtemp
-```
-
-You may now use these directories as the basis for your volume configurations as documented below.
-
-## Required Volume Definitions
 
 ### `/snowbound/classes`
 
 Classes to be added to the VirtualViewer webapp
 
-- Place `SnowboundLicense.jar`, custom content handler `JAR`, and any other `JAR` files that are required in the `$CATALINA_HOME/webapps/virtualviewer/WEB-INF/lib` directory
+- Place `slicense.json`, custom content handler `JAR`, and any other `JAR` files that are required in the `$CATALINA_HOME/webapps/virtualviewer/WEB-INF/lib` directory
 - Directories will be ignored and existing files in `lib` will not be overwritten
-- Example: `-v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/classes:/snowbound/classes`
+- Example: `-v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.8.0/classes:/snowbound/classes`
 
 
-
-## Optional Volume Definitions
 
 ### `/snowbound/fonts`
 
@@ -281,7 +266,7 @@ Additional fonts not provided by the tomcat image
 * Place additional `ttf` files here
 * They will be copied into `$CATALINA_HOME/webapps/virtualviewer/fonts`
 
-- Example: `-v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/fonts:/snowbound/fonts`
+- Example: `-v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.8.0/fonts:/snowbound/fonts`
 
 
 
@@ -301,7 +286,7 @@ Tomcat global configuration files
 * Place custom server.xml file here
 * They will be copied into `$CATALINA_HOME/conf`
 
-- Example: `-v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/tomcat:/snowbound/tomcat`
+- Example: `-v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.8.0/tomcat:/snowbound/tomcat`
 
 
 
@@ -311,7 +296,7 @@ VirtualViewer user configurable `CSS` and `JS` files
 
 - Place custom `CSS` and `JS` files here
 - Files will be copied into `$CATALINA_HOME/webapps/virtualviewer/user-config`
-- Example: `-v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/user-config:/snowbound/user-config`
+- Example: `-v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.8.0/user-config:/snowbound/user-config`
 
 
 
@@ -332,7 +317,7 @@ tomcat webapp configuration for VirtualViewer
 
 - Place modified `ehcache.xml` and `web.xml` files in `WEB-INF`
 - They will be copied to `$CATALINA_HOME/webapps/virtualviewer/WEB-INF`
-- Example: `-v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.1.0/WEB-INF:/snowbound/WEB-INF`
+- Example: `-v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.8.0/WEB-INF:/snowbound/WEB-INF`
 
 
 
@@ -357,8 +342,8 @@ Docker images are labeled with various pieces of meta data at build time. To sho
 
 
 
-### `com.snowbound.docker.virtualviewer.jenkins_buildnumber`
-* The `virtualviewer-dockerfiles` Jenkins job number.
+### `com.snowbound.docker.virtualviewer.ci_buildnumber`
+* The `virtualviewer-dockerfiles` CI job number.
 * Example: `1`
 
 
@@ -371,13 +356,13 @@ Docker images are labeled with various pieces of meta data at build time. To sho
 
 ### `com.snowbound.docker.virtualviewer.product_version`
 * The VirtualViewer Java version number. The 4th number is the VirtualViewer-Java Jenkins job number. 
-* Example: `5.1.0.345`
+* Example: `5.8.0.345`
 
 
 
 ### `com.snowbound.docker.virtualviewer.rm_java_artifact_version`
 * The artifact version of RasterMaster Java used in this VirtualViewer Java build.
-* Example: `20.1.0`
+* Example: `20.8.0`
 
 
 

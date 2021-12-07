@@ -212,14 +212,14 @@ services:
             - ./entrypoints/nginx_entrypoint.sh:/nginx_entrypoint.sh:ro
 
     vv-alfresco:
-        image: snowbound/virtualviewer-alfresco:5.7.0-latest
+        image: snowbound/virtualviewer-alfresco:5.8-tomcat9.0-jdk11-openjdk-latest
         links:
             - alfresco
             - share
         volumes:
             - ehcache_vol:/tmp/vvcache
             - vvtmp_vol:/tmp/vvtmp
-            - ./classes:/snowbound/classes:ro
+#            - ./classes:/snowbound/classes:ro
 #            - ./fonts:/snowbound/fonts:ro
 #            - ./js:/snowbound/js:ro
 #            - ./tomcat:/snowbound/tomcat:ro
