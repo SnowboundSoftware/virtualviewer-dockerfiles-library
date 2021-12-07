@@ -36,28 +36,6 @@ cp -v /snowbound/tomcat/* -t $CATALINA_HOME/conf/
 echo Symlinking mounted fonts
 ln -s /snowbound/fonts $VVROOT/fonts
 
-# Check for license
-if [ ! -f "$VVROOT/WEB-INF/lib/SnowboundLicense.jar" ]; then
-	echo ""
-    echo "$VVROOT/WEB-INF/lib/SnowboundLicense.jar does not exist!!!"
-	echo ""
-    echo -e "-------------------------------------------------"
-    echo -e "|                 _ _                           |"
-    echo -e "|   _ __   ___   | (_) ___ ___ _ __  ___  ___   |"
-    echo -e "|  | '_ \ / _ \  | | |/ __/ _ \ '_ \/ __|/ _ \  |"
-    echo -e "|  | | | | (_) | | | | (_|  __/ | | \__ \  __/  |"
-    echo -e "|  |_| |_|\___/  |_|_|\___\___|_| |_|___/\___|  |"
-    echo -e "|                                               |"
-    echo -e "-------------------------------------------------"
-    echo ""
-	echo "------------------------------------------------------"
-	echo "|                                                    |"
-	echo "|  YOU WILL LIKELY RECEIVE 'PAGE NOT FOUND' ERRORS!  |"
-	echo "|                                                    |"
-	echo "------------------------------------------------------"
-	echo ""
-fi
-
 # Start tomcat
 echo Starting tomcat...
 catalina.sh run

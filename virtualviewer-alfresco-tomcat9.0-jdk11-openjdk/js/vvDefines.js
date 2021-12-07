@@ -12,19 +12,19 @@ define([], function() {
      */
     vvDefines = {
         productName: "VirtualViewer HTML5",
-        productVersion: "5.6",
+        productVersion: "5.8",
         cacheBuster: false,
         annColorBlobSize: 15,
         annColorBlobSizeTouch: 40,
         annColorRowSize: 10,
         annMinimizeButtonSize: 14,
-        maxNumberOfTabs: 10,
         autoSaveAnnotations: false,
         mostRecentlyViewedListLength: 10,
         autoLayerName: "AutoLayer",
         redactionLayerPrefix: "vvRedaction",
         hideRedactionLayerFromManager: true,
         thumbnailSize: 140,
+        fullThumbnailSize: 400,
         ie9DrawDelay: 100,
         minTextAnnDrawSize: 10,
         idmMax: 10000,
@@ -74,7 +74,9 @@ define([], function() {
             SANN_FILLED_POLYGON: "FilledPolygon",
             SANN_RECTANGLE: "Rectangle",
             SANN_ELLIPSE: "Ellipse",
-            SANN_POLYGON: "Polygon",
+            SANN_POLYGON: "Polygon"
+        },
+        unsupportedAnnotationTypes:{
             SANN_TRANSPARENT_BITMAP: "TransparentBitmap",
             SANN_BUBBLE: "Bubble",
             SANN_CLOUD_EDIT: "Cloud",
@@ -279,7 +281,7 @@ define([], function() {
         /* Default ZoomLevels are only to be used if zoomLevels in config.js is missing or invalid */
         defaultZoomLevels: [2, 3, 4, 6, 8, 10, 15, 20, 30, 40, 50, 75, 100, 150, 200, 300, 400, 600,
                 800, 1000, 1500, 2000, 3000],
-        aboutDialogTextContents: "&reg;1996-2020 All Rights Reserved.  (licensing information). VirtualViewer and the VirtualViewer logo are trademarks of the Snowbound Software Corporation. All Rights Reserved. Some of the trademarks used under license from partner companies."
+        aboutDialogTextContents: "&reg;1996-2021 All Rights Reserved.  (licensing information). VirtualViewer and the VirtualViewer logo are trademarks of the Snowbound Software Corporation. All Rights Reserved. Some of the trademarks used under license from partner companies."
     };
     return vvDefines;
 });

@@ -78,19 +78,24 @@ define(["require"], function(require) {
             "vvAnnRect": { localizeKey: "annToolbar.rectangle", annType: "Rectangle", groupId: "vvShapes" },
             "vvAnnEllipse": { localizeKey: "annToolbar.ellipse", annType: "Ellipse", groupId: "vvShapes" },
             "vvAnnPolygon": { localizeKey: "annToolbar.polygon", annType: "Polygon", groupId: "vvShapes" },
-            "vvWatermarks": { localizeKey: "annToolbar.createWatermark", clickHandler: virtualViewer.showWatermarksManager, groupId: "" },
-            "vvLayerManager": { localizeKey: "annToolbar.layerManager", clickHandler: virtualViewer.toggleLayerManager, groupId: "" }
+            "vvWatermarks": { localizeKey: "annToolbar.createWatermark", clickHandler: virtualViewer.showWatermarksManager, groupId: "vvMiscAnnTools" },
+            "vvLayerManager": { localizeKey: "annToolbar.layerManager", clickHandler: virtualViewer.toggleLayerManager, groupId: "vvMiscAnnTools" }
         };
 
         var toolbarButtonLogicalGroups = {
-            "vvFileGroup": { groupTitle: "File", localizeKey: "utilityToolbar.fileGroup", iconImage: "" },
-            "vvZoomGroup": { groupTitle: "Zoom", localizeKey: "utilityToolbar.zoomGroup" },
+            // This is a full group object, modifying the collapseThreshold will collapse that group down at the specified value.
+            // Any button that is added gets defaulted to the vvMiscTools and vvMiscAnnTools groups.
+            // "vvExampleGroup": { groupTitle: "File", localizeKey: "utilityToolbar.fileGroup", collapseThreshold: 1200 },
+            "vvFileGroup": { groupTitle: "File", localizeKey: "utilityToolbar.fileGroup"},
+            "vvZoomGroup": { groupTitle: "Zoom", localizeKey: "utilityToolbar.zoomGroup"},
             "vvPagesGroup": { groupTitle: "Pages", localizeKey: "utilityToolbar.pagesGroup" },
             "vvPageManipGroup": { groupTitle: "Page Manipulation", localizeKey: "utilityToolbar.pageManipulationGroup" },
             "vvInfoGroup": { groupTitle: "Info and Settings", localizeKey: "utilityToolbar.infoGroup" },
+            "vvMiscTools": { groupTitle: "miscellaneous", localizeKey: "utilityToolbar.miscGroup", collapseThreshold: 0 },
             "vvTextAndStamps": { groupTitle: "Text and Stamps", localizeKey: "annToolbar.textAndStampsGroup", annotationToolbar: true },
             "vvMarkup": { groupTitle: "Markup", localizeKey: "annToolbar.markupGroup", annotationToolbar: true },
-            "vvShapes": { groupTitle: "Shapes", localizeKey: "annToolbar.shapesGroup", annotationToolbar: true }
+            "vvShapes": { groupTitle: "Shapes", localizeKey: "annToolbar.shapesGroup", annotationToolbar: true },
+            "vvMiscAnnTools": { groupTitle: "miscellaneous", localizeKey: "annToolbar.miscGroup", annotationToolbar: true, collapseThreshold: 0}
         };
 
         return {
