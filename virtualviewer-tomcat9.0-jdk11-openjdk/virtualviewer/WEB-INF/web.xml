@@ -29,6 +29,17 @@
             <param-name>logLevel</param-name>
             <param-value>ALL</param-value>
         </init-param> 
+
+        <!-- The default language specified, via a three-letter ISO language code, when performing OCR on an image. The language
+            will determine which characters the OCR engine will attempt to recognize.
+         
+            The default value is "eng" for English. This should be set to the language of most documents users will see - if specific images are 
+            different from the default, another language code can be specified in the Javascript API when searching or performing OCR.
+        -->
+        <init-param>
+            <param-name>defaultOcrLanguage</param-name>
+            <param-value>eng</param-value>
+        </init-param>
         
         <!-- If the OCRDataProviderInterface is implemented, the content handler may pass OCR
              data to VirtualViewer as a JSON blob. This configuration item sets an "OCR font" 
@@ -135,6 +146,11 @@
         <init-param>
             <param-name>fastRasterToPDFShrinkToFit</param-name>
             <param-value>false</param-value>
+        </init-param>
+        <!-- The default rendering mode for MSG files: can be HTML, RTF, or ASCII. -->
+        <init-param>
+            <param-name>msgRenderPreference</param-name>
+            <param-value>HTML</param-value>
         </init-param>
         <init-param>
             <param-name>pdfBitDepth</param-name>
@@ -314,6 +330,10 @@
             <param-value>1</param-value>
         </init-param>
         
+        <init-param>
+            <param-name>enableFilenameSafeAttachmentIds</param-name>
+            <param-value>true</param-value>
+        </init-param>
          <!-- Set-Up for Exchange Info -->
         <init-param>
             <param-name>showExchange</param-name>

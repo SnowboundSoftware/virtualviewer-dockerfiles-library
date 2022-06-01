@@ -123,18 +123,18 @@ Below are a few examples of how to run Snowbound VirtualViewer on Docker. Before
 
 ## Sample Handler
 
-1. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest`.
+1. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.9-tomcat9.0-jdk11-openjdk-latest`.
 2. Open a browser to http://localhost:8080/virtualviewer.
 
 
 
 ## License as Environmental Variable
 
-1. Run `docker run -it -p 8080:8080 --env SLICENSE="CONTENTS OF SLICENSE.JSON" quay.io/snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest`.
+1. Run `docker run -it -p 8080:8080 --env SLICENSE="CONTENTS OF SLICENSE.JSON" quay.io/snowbound/virtualviewer:5.9-tomcat9.0-jdk11-openjdk-latest`.
    - You will need to escape `"` as `\"` and place the license within quotes.
    - Example
       - `export SLICENSE='{"SerialNumber":"1294a340-e3b2-4366-89b6-0fe71aae3ffb","Company":"Snowbound Software","OrderNumber":"Documentation","License_ExpirationDate":"10-20-2021","Maintenance_ExpirationDate":"10-20-2021","Products":["RasterMasterJava","VirtualViewerJava"],"LicenseType":"None","OEM":"","CanOEM":false},"rastermaster":{"Major":-1,"Minor":-1,"Formats":["standard","annotation","svg"]},"virtualviewer":{"Major":-1,"Minor":-1},"Signature":"BAoYP3sCpJGFVVDlhqRa6XKWZ9od0HK9ngiWFN9EMZjIftrgOrYm9SIy58HHabRwXE/Cr5ClQcILAjT03XJ0Ndedt253PLtJmjVSD/5YhFQgCk4H4WUhxE1llqY+wL5eD6qBa8ekKk6pD5jT/7hZQvTvY7bbcsgL/54ndZIII6kg51qkfVCmu/KNFsDULWn8FVI3eyJc/AUZK1cYpOFykvZxux4uCOeloMRspeKkV+tXvagP/P9E50AdvlvsdjYOsLY2YrVinyOGDEWlwWj/neT/TG0+Qr0quOnrt3MxnyPKKsy8y0AN/ysMGmHcSF1HOQi6wxgG2rn8tbJfZ/aqeQ=="}'`
-      - `docker run -it -p 8080:8080 --env SLICENSE=$SLICENSE quay.io/snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest`
+      - `docker run -it -p 8080:8080 --env SLICENSE=$SLICENSE quay.io/snowbound/virtualviewer:5.9-tomcat9.0-jdk11-openjdk-latest`
 2. Open a browser to http://localhost:8080/virtualviewer.
 
 
@@ -143,7 +143,7 @@ Below are a few examples of how to run Snowbound VirtualViewer on Docker. Before
 
 1. Copy your custom content handler`.jar`  and required dependencies into the newly created `classes` directory.
 2. In the `WEB-XML` directory, edit the parameter `contentHandlerClass` and replace `com.snowbound.contenthandler.example.FileContentHandler` with the classpath of your custom content handler.
-3. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest`
+3. Run `docker run -it -p 8080:8080 -v <PATH TO CLASSES>:/snowbound/classes quay.io/snowbound/virtualviewer:5.9-tomcat9.0-jdk11-openjdk-latest`
 4. Open a browser to http://localhost:8080/virtualviewer.
 
 
@@ -173,7 +173,7 @@ You will need to add the `-v <PATH TO TOMCAT>:/snowbound/tomcat` argument to you
 
 ## Example
 
-`docker run -it -p 8080:8080 -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.8.0/classes:/snowbound/classes -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.8.0/tomcat:/snowbound/tomcat quay.io/snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest`
+`docker run -it -p 8080:8080 -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.8.0/classes:/snowbound/classes -v /home/dpowers/git/virtualviewer-tomcat9.0-jdk11-openjdk_v5.8.0/tomcat:/snowbound/tomcat quay.io/snowbound/virtualviewer:5.9-tomcat9.0-jdk11-openjdk-latest`
 
 
 
@@ -207,7 +207,7 @@ Specify how much of the available CPU resources a container can use. For instanc
 ### Example
 
 `docker run -it -p 8080:8080 -v /home/dpowers/classes:/snowbound/classes --mount type=tmpfs,destination=/tmp
-/vvcache -m 512m --cpus=1 quay.io/snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest`
+/vvcache -m 512m --cpus=1 quay.io/snowbound/virtualviewer:5.9-tomcat9.0-jdk11-openjdk-latest`
 
 
 
