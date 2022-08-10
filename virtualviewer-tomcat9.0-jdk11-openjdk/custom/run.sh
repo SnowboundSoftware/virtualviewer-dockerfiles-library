@@ -16,6 +16,10 @@ echo ""
 echo Copying License and additional class files...
 cp -v -n /snowbound/classes/* -t $VVROOT/WEB-INF/lib/
 
+# If the user renames the license, this won't work
+echo Copying slicense.json but with overwrite enabled
+cp -v /snowbound/classes/slicense.json -t $VVROOT/WEB-INF/lib/
+
 # Copy in WEB-INF files
 echo Copying WEB-INF files
 cp -v /snowbound/WEB-INF/* -t $VVROOT/WEB-INF/

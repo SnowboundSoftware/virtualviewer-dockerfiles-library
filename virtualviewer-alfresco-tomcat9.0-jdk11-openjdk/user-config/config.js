@@ -542,6 +542,17 @@ define(["vvDefines"], function(vvDefines) {
          * @memberof vvConfig
          */
         annotationTags: [],
+
+        /** 
+         * @member {string[]} fontNames A list of font faces. These fonts will be added to font dropdown lists.
+         * Annotations, watermarks, and text stamps will be able to use these fonts. Any font listed here must be
+         * installed on the client machine in order to appear in the VirtualViewer client, and must be installed
+         * on the server machine in order to appear in exported or printed documents. The font name here on the 
+         * client must match exactly to the font name installed on the server. These fonts will be appended to the 
+         * default fonts.
+         * @memberof vvConfig
+         */
+        fontNames: [],
     
         /*
          * -- ZOOM --
@@ -562,6 +573,13 @@ define(["vvDefines"], function(vvDefines) {
          * @memberof vvConfig
          */
         fitLastBetweenDocuments: false,
+
+        /**
+         * @member {number} fitWidthPercentageDefault set a number between 1 and .5 to default the fitWidthPercentage user preference to.
+         * @see defaultZoomLevel
+         * @memberof vvConfig
+         */
+        defaultFitWidthPercent: 1,
 
         /**
          * @member {boolean} positionLastBetweenDocuments Retain the scroll position of the previously-open document. So, for instance,
@@ -650,45 +668,65 @@ define(["vvDefines"], function(vvDefines) {
          */
         /**
          * @member {boolean} videoAutoplay Autoplay videos when they are ready.
-         * @see vvConfig.videoControls
-         * @see vvConfig.videoMuted
-         * @see vvConfig.videoStretch
          * @memberof vvConfig
          */
         videoAutoplay:false,
+        /**
+         * @member {string} videoPreload Suggestion for the browser on how much of a video to start loading 
+         * before the play button is pressed. This is only a suggestion to the browser and may be ignored. 
+         * If the video is set to autoplay, this setting will be ignored and the video will begin loading immediately.
+         * 
+         * Possible values are 
+         *  - "none": do not preload any data
+         *  - "metadata": preload only metadata such as video length
+         *  - "auto": begin preloading video data immediately (suggested for VirtualViewer)
+         * @memberof vvConfig
+         */
+        videoPreload: "auto",
         /**
          * @member {boolean} videoControls If true, display the controls on the HTML5 video player. If false, the video can be controlled through
          * VirtualViewer API or by interacting with the player itself.
          * @see VirtualViewer#playVideo
          * @see VirtualViewer#getMediaPlayer
-         * @see vvConfig.videoAutoplay
-         * @see vvConfig.videoMuted
-         * @see vvConfig.videoStretch
          * @memberof vvConfig
          */
         videoControls:true,
         /**
          * @member {boolean} videoMuted If true, videos will load muted, and must be manually unmuted.
-         * @see vvConfig.videoControls
-         * @see vvConfig.videoAutoplay
-         * @see vvConfig.videoStretch
          * @memberof vvConfig
          */
         videoMuted:true,
         /**
          * @member {boolean} videoStretch Whether the video player will stretch across the viewport of the viewer, or play at the 
          * video's natural size in the middle.
-         * @see vvConfig.videoControls
-         * @see vvConfig.videoAutoplay
-         * @see vvConfig.videoMuted
          * @memberof vvConfig
          */
         videoStretch:true,
+        /**
+         * @member {boolean} videoCaptions Whether captions will be enabled by default for video or will need to be manually enabled in the 
+         *  media controls.
+         * @memberof vvConfig
+         */
+        videoCaptions: false,
         
         /**
          *  --Audio--
          */
         
+        /**
+         * @member {string} audioPreload Suggestion for the browser on how much of the audio file to start loading 
+         * before the play button is pressed. This is only a suggestion to the browser and may be ignored. 
+         * If the audio is set to autoplay, this setting will be ignored and the audio will begin loading immediately.
+         * 
+         * Possible values are 
+         *  - "none": do not preload any data
+         *  - "metadata": preload only metadata such as audio length
+         *  - "auto": begin preloading audio data immediately (suggested for VirtualViewer)
+         * 
+         * @memberof vvConfig
+         */
+         audioPreload: "auto",
+
         /**
          * @member {boolean} audioLoop When enabled, audio will loop when it finishes playing.
          * @see vvConfig.audioBackground
@@ -703,7 +741,14 @@ define(["vvDefines"], function(vvDefines) {
          * @memberof vvConfig
          */
         audioBackground:true,
-        
+
+        /**
+        * @member {boolean} audioCaptions Whether captions will be enabled by default for audio or will need to be manually enabled in the 
+        *  media controls.
+        * @memberof vvConfig
+        */
+       audioCaptions: false,
+
         /*
          * -- PRINTING --
          */
@@ -1314,7 +1359,21 @@ define(["vvDefines"], function(vvDefines) {
          */
         multipleDocMode: vvDefines.multipleDocModes.viewedDocuments,
 
-        // 
+        /**
+         * @member {boolean} orderViewedDocumentsByFirstOpened If {@link vvConfig.multipleDocMode} is set to
+         * "viewedDocuments" mode, setting this member to `true` will preserve the viewed documents list 
+         * in the order that the documents were first open. It will not keep track of when the document was most recently viewed.
+         * @memberof vvConfig
+         */
+        orderViewedDocumentsByFirstOpened: false,
+
+        /**
+         * @member {number} recentlyViewedDocumentsListLength If {@link vvConfig.multipleDocMode} is set to
+         * "viewedDocuments" mode, this setting will adjust the maximum number of viewed documents that
+         * will be preserved in the list.
+         */
+        recentlyViewedDocumentsListLength: 10,
+
         /**
          * @member {number} panIncrement Define how far, in pixels, to pan for each arrow press.
          * @memberof vvConfig

@@ -3,15 +3,15 @@ version: '3'
 
 services:
   vv-java-tomcat:
-    image: snowbound/virtualviewer:5.8-tomcat9.0-jdk11-openjdk-latest
-#    image: snowbound/virtualviewer:5.8.0.1120-tomcat9.0-jdk11-openjdk
+    image: quay.io/snowbound/virtualviewer:5.9-tomcat9.0-jdk11-openjdk-latest
+#    image: quay.io/snowbound/virtualviewer:5.9.0.1382-tomcat9.0-jdk11-openjdk
     restart: always
     ports:
       - 8080:8080
     volumes:
       - ehcache_vol:/tmp/vvcache
       - vvtmp_vol:/tmp/vvtmp
-#      - ./classes:/snowbound/classes:ro
+      - ./classes:/snowbound/classes:ro
 #      - ./fonts:/snowbound/fonts:ro
 #      - ./tomcat:/snowbound/tomcat:ro
 #      - ./user-config:/snowbound/user-config:ro

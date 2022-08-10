@@ -24,7 +24,7 @@
     
     <cache alias="vvOcrCache"> 
         <key-type>java.lang.String</key-type>
-        <value-type>[B</value-type>
+        <value-type>com.snowbound.snapserv.transport.pagedata.CachedOCRDocument</value-type>
                 
         <resources>
             <!-- Using a 'unit' other than 'entries' below (MB, kB, GB, etc) will require walking the object 
