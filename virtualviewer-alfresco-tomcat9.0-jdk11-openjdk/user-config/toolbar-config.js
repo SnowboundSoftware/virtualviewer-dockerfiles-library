@@ -32,7 +32,7 @@ define(["require"], function(require) {
             //"myCustomButton": { name: "My Button Tooltip", iconImage: "path/to/icon.png", clickHandler: function () { alert('Hello World'); }, groupId: "vvFileGroup" },
             "vvSaveDocument": { localizeKey: "utilityToolbar.saveDocument", clickHandler: virtualViewer.saveDocument, groupId: "vvFileGroup" },
             "vvSaveDocumentAs": { localizeKey: "utilityToolbar.saveDocumentAs", clickHandler: virtualViewer.saveDocumentAsDialog, groupId: "vvFileGroup" },
-            "vvFileUpload": { localizeKey: "utilityToolbar.uploadDocument", clickHandler: virtualViewer.showUploadLocalFileDialog, groupId: "vvFileGroup", addSeparatorAfter: true },
+            "vvFileUpload": { localizeKey: "utilityToolbar.uploadDocument", clickHandler: virtualViewer.showUploadLocalFileDialog, groupId: "vvFileGroup", mediaEnabled:true, addSeparatorAfter: true },
             "vvExportDocument": { localizeKey: "utilityToolbar.exportDocument", clickHandler: virtualViewer.exportDocumentDialog, groupId: "vvFileGroup" },
             "vvEmailDocument": { localizeKey: "utilityToolbar.emailDocument", clickHandler: virtualViewer.emailDocumentDialog, groupId: "vvFileGroup" },
             "vvPrint": { localizeKey: "utilityToolbar.printDocument", clickHandler: virtualViewer.printDocumentDialog, groupId: "vvFileGroup" },
@@ -57,8 +57,8 @@ define(["require"], function(require) {
             "vvPictureControls": { localizeKey: "utilityToolbar.pictureControls", clickHandler: virtualViewer.showPictureControlsDialog, groupId: "vvPageManipGroup", subgroup: 1 },
             "vvCrop": { localizeKey: "utilityToolbar.crop", clickHandler: virtualViewer.cropPageButton, groupId: "vvPageManipGroup" },
             "vvImageInfo": { localizeKey: "utilityToolbar.toggleImageInfo", clickHandler: virtualViewer.toggleImageInfo, groupId: "vvInfoGroup" },
-            "vvAbout": { localizeKey: "utilityToolbar.showAboutDialog", clickHandler: virtualViewer.showAboutDialog, groupId: "vvInfoGroup" },
-            "vvUserPreferences": { localizeKey: "utilityToolbar.showUserPreferencesDialog", clickHandler: virtualViewer.showUserPreferencesDialog, groupId: "vvInfoGroup" },
+            "vvAbout": { localizeKey: "utilityToolbar.showAboutDialog", clickHandler: virtualViewer.showAboutDialog, groupId: "vvInfoGroup", mediaEnabled:true },
+            "vvUserPreferences": { localizeKey: "utilityToolbar.showUserPreferencesDialog", clickHandler: virtualViewer.showUserPreferencesDialog, groupId: "vvInfoGroup", mediaEnabled:true },
             "vvSpeechSynthesis": { localizeKey: "utilityToolbar.toggleSpeechControls", clickHandler: virtualViewer.toggleSpeechControls, groupId: "vvInfoGroup" },
             "vvToggleFullScreen": { localizeKey: "utilityToolbar.toggleFullScreen", clickHandler: toggleFullScreen, groupId: ""}
         };
