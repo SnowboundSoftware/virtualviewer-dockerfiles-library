@@ -12,7 +12,7 @@ define([], function() {
      */
     vvDefines = {
         productName: "VirtualViewer HTML5",
-        productVersion: "5.9",
+        productVersion: "5.12",
         cacheBuster: false,
         annColorBlobSize: 15,
         annColorBlobSizeTouch: 40,

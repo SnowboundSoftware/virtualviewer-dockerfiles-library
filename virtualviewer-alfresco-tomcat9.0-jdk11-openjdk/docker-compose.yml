@@ -212,7 +212,7 @@ services:
             - ./entrypoints/nginx_entrypoint.sh:/nginx_entrypoint.sh:ro
 
     vv-alfresco:
-        image: quay.io/snowbound/virtualviewer-alfresco:5.9-tomcat9.0-jdk11-openjdk-latest
+        image: quay.io/snowbound/virtualviewer-alfresco:5.12-tomcat9.0-jdk11-latest
         links:
             - alfresco
             - share
