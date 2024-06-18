@@ -1,6 +1,6 @@
 # This Dockerfile is a vanilla VirtualViewer with a sample content-handler
 # Remember, if no license is loaded, you will get `Page Not Found` in the document library and `Image failed to load` when you click on the document.
-FROM quay.io/snowbound/virtualviewer-base:tomcat9.0-jdk11-openjdk-latest
+FROM snowbound/virtualviewer-base:tomcat9.0-jdk11-openjdk-latest
 
 # Set environment variables
 ENV VVROOT $WEBAPPS/virtualviewer

@@ -35,7 +35,7 @@ To run Alfresco with docker-compose, you will need to install license files firs
 1. Clone this repository to your Docker host in its entirety.
 2. `cd` into the directory containing the `docker-compose.yml` you would like to use.
 3. Run `chmod +x entrypoints/*`.
-4. Insert the `SnowboundLicense.jar` into the `classes` directory.
+4. Insert the `slicense.json` into the `classes` directory.
 5. If you are running Alfresco Enterprise, insert your license into the `alfresco_license` directory.
 6. Run `docker-compose up -d` . This will detach once the containers are running.
 7. Run  `docker-compose logs -f` to follow the logs. Press `Ctrl+C` to detach from the log stream.
