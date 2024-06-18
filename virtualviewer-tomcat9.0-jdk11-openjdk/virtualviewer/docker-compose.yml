@@ -4,7 +4,7 @@ version: '3'
 services:
   vv-java-tomcat:
     image: snowbound/virtualviewer:5.13-tomcat9-jdk11-temurin-latest
-#    image: snowbound/virtualviewer:5.13-tomcat9-jdk11-temurin-latest
+#   image: snowbound/virtualviewer:5.13.0.1033-tomcat9-jdk11
     restart: always
     ports:
       - 8080:8080
