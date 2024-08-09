@@ -1,0 +1,10 @@
+FROM quay.io/alfresco/alfresco-content-repository:23.2.2
+
+COPY ./amps/snowbound-repo-5.13.0.amp /usr/local/tomcat/amps
+
+USER root
+
+RUN java -jar /usr/local/tomcat/alfresco-mmt/alfresco-mmt*.jar install \
+    /usr/local/tomcat/amps/ /usr/local/tomcat/webapps/alfresco -directory -nobackup -force
+
+USER alfresco
